@@ -1,9 +1,11 @@
 # Slime_Sports
 Based on the Flash game, Slime Soccer, Slime Sports builds of the basic concept of the game and makes it more complex.
 
+The purpose of the project is to make a fun, competitive, and easy to play game against some friends.  It also adds some addition game modes that were not in the original Slime Soccer. 
+
 All the Slime Games in this project are two player local co-op 2-D games. There will be 4 game modes that can be played. They are soccer, basketball, volleyball, and spleef.
 
-# Goal of the Game
+# Goal of each Game
 The goal in soccer is to put the ball in the opponent's goal.
 
 The goal in basketball is to put the ball in the opponent's hoop.  However, it must go through the top of the hoop to get the point.
@@ -34,3 +36,5 @@ Move Right: Right Arrow
 
 # Ball
 The ball will have gravity properties to it, but they may be slightly altered from realistic physics.  Altering the ball physics helps the game to be more enjoyable.
+
+The outside border on all sides of the window are boundaries for the ball and will reflect the ball as if it was a wall.
