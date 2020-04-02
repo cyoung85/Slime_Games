@@ -30,6 +30,7 @@ public class MainMenu implements ActionListener {
 		// Test Text area
 		test = new JTextArea();
 		
+		//Frame Layout
 		frame.setLayout(new BorderLayout());
 		frame.add(play,BorderLayout.SOUTH);
 		frame.add(test,BorderLayout.NORTH);
@@ -42,7 +43,8 @@ public class MainMenu implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		SlimeGames.resetScore();
-		test.setText(test.getText().concat("You have clicked the button\n"));
+		frame.setVisible(false);
+		SlimeSoccer s = new SlimeSoccer();
 	}
 	
 }
