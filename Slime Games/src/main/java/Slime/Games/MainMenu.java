@@ -19,7 +19,7 @@ public class MainMenu implements ActionListener {
 		
 		//JFrame Config
 		frame = new JFrame("Slime Games");
-		Dimension screenSize = new Dimension(600,800);
+		Dimension screenSize = new Dimension(1500,800);
 		frame.setPreferredSize(screenSize);
 		frame.setResizable(false);
 		
