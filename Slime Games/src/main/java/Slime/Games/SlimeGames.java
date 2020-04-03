@@ -7,6 +7,7 @@ public class SlimeGames {
 	public static void main(String args[])
 	{
 		MainMenu test = new MainMenu();
+		
 	}
 	public static void resetScore() {
 		setP1Score(0);

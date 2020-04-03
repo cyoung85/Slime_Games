@@ -1,5 +1,5 @@
 package Slime.Games;
-
+import java.awt.Graphics;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -13,13 +13,13 @@ public class MainMenu implements ActionListener {
 	private JButton play;
 	private JTextArea test;
 	
-
-	@SuppressWarnings("deprecation")
+	
+	//@SuppressWarnings("deprecation")
 	public MainMenu(){
 		
 		//JFrame Config
 		frame = new JFrame("Slime Games");
-		Dimension screenSize = new Dimension(1500,800);
+		Dimension screenSize = new Dimension(600,800);
 		frame.setPreferredSize(screenSize);
 		frame.setResizable(false);
 		
@@ -30,6 +30,7 @@ public class MainMenu implements ActionListener {
 		// Test Text area
 		test = new JTextArea();
 		
+		//Frame Layout
 		frame.setLayout(new BorderLayout());
 		frame.add(play,BorderLayout.SOUTH);
 		frame.add(test,BorderLayout.NORTH);
@@ -38,11 +39,17 @@ public class MainMenu implements ActionListener {
         frame.setVisible(true);
 		
 	}
-
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		SlimeGames.resetScore();
-		test.setText(test.getText().concat("You have clicked the button\n"));
+		frame.setVisible(false);
+		SlimeSoccer s = new SlimeSoccer();
+		//s.repaint();
+		
+		//s.paintComponent(null);
+		
 	}
+	
 	
 }
