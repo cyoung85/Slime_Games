@@ -39,6 +39,7 @@ public class SlimeSoccer extends JFrame implements ActionListener{
         g.setColor(dark_green);
         g.fillRect(0, 600,1200, 100 );
         
+        
         Color light_grey = new Color(204,204,204);
         //left goal
         //horizontal lines
@@ -77,11 +78,7 @@ public class SlimeSoccer extends JFrame implements ActionListener{
         g.drawLine(1101, 500, 1101, 600);
         g.drawLine(1102, 500, 1102, 600);
         
-        
-        //volleyball
-        //g.drawLine(599, 500, 599, 600);
-        //g.drawLine(600, 500, 600, 600);
-        //g.drawLine(601, 500, 601, 600);
+      
         
     }   
 	
