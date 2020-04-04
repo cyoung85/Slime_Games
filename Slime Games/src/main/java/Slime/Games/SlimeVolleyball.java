@@ -35,8 +35,9 @@ public class SlimeVolleyball extends JFrame implements ActionListener{
     	Color light_blue = new Color(51,153,255);
     	g.setColor(light_blue);
         g.fillRect(0, 0,1200, 700 );
-        Color dark_green = new Color(0,153,0);
-        g.setColor(dark_green);
+        Color sand = new Color(244,204,99);
+        //Color dark_green = new Color(0,153,0);
+        g.setColor(sand);
         g.fillRect(0, 600,1200, 100 );
         
         

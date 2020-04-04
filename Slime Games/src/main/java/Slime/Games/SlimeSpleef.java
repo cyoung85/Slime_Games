@@ -43,7 +43,7 @@ public class SlimeSpleef extends JFrame implements ActionListener{
         Color light_grey = new Color(204,204,204);
         
         //left 3 sections for spleef 
-        g.setColor(dark_green);
+        g.setColor(dark_green); // default set to normal grass color
         g.fillRect(0, 600,199, 100 ); //left side left section
         //g.setColor(dark_red); 
         g.fillRect(200, 600,399, 100 ); //left side middle section
