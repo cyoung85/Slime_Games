@@ -19,6 +19,8 @@ There will be a timer counting down to indicate how much time is left in the gam
 # Requirements
 The game requires the user to be able to run a java file, so the game will play.  We used Eclipse to make and run the game.  You will also need to download all the files so you have all the classes and code required for the game.
 
+Once you have all the files you will want to run the game from the SlimeGames.java file.
+
 # Controls
 ### Player 1 Movement 
 Move Left: A
