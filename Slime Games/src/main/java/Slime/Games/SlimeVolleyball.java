@@ -17,7 +17,7 @@ public class SlimeVolleyball extends JFrame implements ActionListener{
 	//Frame Declarations
 		SlimeVolleyball(){
         setSize(1200, 700);
-        setTitle("Slime Soccer");
+        setTitle("Slime Volleyball");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         setResizable(false);
