@@ -166,22 +166,19 @@ public class MainMenu implements ActionListener {
 
 			//red slime
 			g.setColor(Color.RED);
-			g.fillArc(450, 250, 300, 300, 0, 180);//body
+			g.fillArc(450, 250, 300, 300, 0, 180);
 			g.setColor(Color.WHITE);
-			g.fillOval(645, 280, 40, 40);//eye (+65, +10)
+			g.fillOval(645, 280, 40, 40);
 			g.setColor(Color.BLACK);
-			g.fillOval(658, 285, 25, 25);//pupil (+70, +10)
+			g.fillOval(658, 285, 25, 25);
 
 			//yellow slime
 			g.setColor(Color.YELLOW);
-			g.fillArc(900, 400, 300, 300, 0, 180);//body
+			g.fillArc(900, 400, 300, 300, 0, 180);
 			g.setColor(Color.WHITE);
-			g.fillOval(960, 430, 40, 40);//eye (+35, +10)
+			g.fillOval(960, 430, 40, 40);
 			g.setColor(Color.BLACK);
-			g.fillOval(963, 433, 25, 25);//pupil (+35, +10)
-
-
-
+			g.fillOval(963, 433, 25, 25);
 
 		}
 	}
