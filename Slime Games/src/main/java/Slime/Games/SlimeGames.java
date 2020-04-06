@@ -1,8 +1,8 @@
 package Slime.Games;
 
 public class SlimeGames {
-	private static int p1score = 0;
-	private static int p2score = 0;
+	public static int p1score = 0;
+	public static int p2score = 0;
 	
 	public static void main(String args[])
 	{

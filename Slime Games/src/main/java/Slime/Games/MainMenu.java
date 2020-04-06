@@ -149,8 +149,12 @@ public class MainMenu implements ActionListener {
 
 		@Override
 		protected void paintComponent(Graphics g){
+
+			//socccer ball
 			g.setColor(Color.WHITE);
 			g.fillOval(1200, 200, 65, 65);
+
+			//basketball
 			g.setColor(Color.ORANGE);
 			g.fillOval(950, 100, 65, 65);
 			g.setColor(Color.BLACK);
@@ -160,6 +164,24 @@ public class MainMenu implements ActionListener {
 			g.drawLine(983, 165, 983, 100);
 			g.drawLine(950, 132, 1015, 132);
 			g.drawArc(909, 100, 65, 65, 310, 100 );
+
+			//red slime
+			g.setColor(Color.RED);
+			g.fillArc(450, 250, 300, 300, 0, 180);//body
+			g.setColor(Color.WHITE);
+			g.fillOval(645, 280, 40, 40);//eye (+65, +10)
+			g.setColor(Color.BLACK);
+			g.fillOval(658, 285, 25, 25);//pupil (+70, +10)
+
+			//yellow slime
+			g.setColor(Color.YELLOW);
+			g.fillArc(900, 400, 300, 300, 0, 180);//body
+			g.setColor(Color.WHITE);
+			g.fillOval(960, 430, 40, 40);//eye (+35, +10)
+			g.setColor(Color.BLACK);
+			g.fillOval(963, 433, 25, 25);//pupil (+35, +10)
+
+
 
 		}
 	}
