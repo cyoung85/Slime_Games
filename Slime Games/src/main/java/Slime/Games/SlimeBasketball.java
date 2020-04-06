@@ -1,16 +1,15 @@
 package Slime.Games;
 
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyEvent.*;
 import java.awt.event.KeyListener;
 
-import javax.swing.*;
 
-public class SlimeSoccer extends JFrame implements ActionListener,KeyListener{
+public class SlimeBasketball extends JFrame implements ActionListener,KeyListener{
 	public final int ballxStart = 580;
 	public final int ballyStart = 200;
 	public int ballx = ballxStart;
@@ -32,59 +31,53 @@ public class SlimeSoccer extends JFrame implements ActionListener,KeyListener{
 	public boolean lFalling = true;
 	public boolean rFalling = true;
 	public final double gravity = 0.5;
-	
-	
-	
-	private double defaultRoundTime = 10;
+	private double defaultRoundTime = 60;
 	private double roundTime = defaultRoundTime;
 	private static Timer timer;
 	public static final int TIMER_SPEED = 12;
-	//private KeyListener key = null;
 	
-	//Frame Declarations
-	SlimeSoccer(){
+	SlimeBasketball(){
         setSize(1200, 700);
-        setTitle("Slime Soccer");
+        setTitle("Slime Basketball");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         setResizable(false);
         
         timer = new Timer(12, this);
         timer.start();
-        
-		addKeyListener(this);
+        addKeyListener(this);
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(false);
-        //Slimes sl = new Slimes();
-        
-        //add(sl);
-    }
+    } // setting JFrame title etc..
 
     public static void main(String[] args) {
-         SlimeSoccer m = new SlimeSoccer();
-         
+         SlimeBasketball m = new SlimeBasketball();
          m.repaint(); 
-         
-         
-    }
+    } //main method
 
-    //@Override
+    @Override
     public void paint(Graphics g) 
     {
-    	
-    	Color light_blue = new Color(51,153,255);
-    	g.setColor(light_blue);
+    	Color white = new Color(255,255,255);
+    	g.setColor(white);
         g.fillRect(0, 0,1200, 700 );
-        Color dark_green = new Color(0,153,0);
-        g.setColor(dark_green);
+        Color dark_brown = new Color(134,73,5);
+        g.setColor(dark_brown);
         g.fillRect(0, 600,1200, 100 );
         
-        g.setColor(Color.white);
+        Color sky = new Color(60,165,250);
+        g.setColor(sky);
+        g.fillRect(140,100,120,120);
+        g.fillRect(540,100,120,120);
+        g.fillRect(940,100,120,120);
+        
+        
+        g.setColor(Color.orange);
     	g.fillOval(ballx, bally, 40, 40);
     	
     	//left slime
         Color black = new Color(0,0,0);
-        Color white = new Color(255,255,255);
+        
         Color red = new Color(255,0,0);
         g.setColor(red);
         g.fillArc(leftx, lefty, 100, 100, 0, 180);
@@ -100,63 +93,101 @@ public class SlimeSoccer extends JFrame implements ActionListener,KeyListener{
         g.fillOval(rightx+35, righty+10, 15, 15);
         g.setColor(black);
         g.fillOval(rightx+35, righty+10, 10, 10);
-    	
         
         Color light_grey = new Color(204,204,204);
-        //left goal
-        //horizontal lines
         g.setColor(light_grey);
-        g.drawLine(0, 500, 100, 500);
-        g.drawLine(0, 499, 100, 499);
-        g.drawLine(0, 498, 100, 498);
-        g.drawLine(0, 525, 100, 525);
-        g.drawLine(0, 550, 100, 550);
-        g.drawLine(0, 575, 100, 575);
-        g.drawLine(0, 600, 100, 600);
-        //vertical lines
-        g.drawLine(0, 500, 0, 600);
-        g.drawLine(25, 500, 25, 600);
-        g.drawLine(50, 500, 50, 600);
-        g.drawLine(75, 500, 75, 600);
-        g.drawLine(100, 500, 100, 600);
-        g.drawLine(99, 500, 99, 600);
-        g.drawLine(98, 500, 98, 600);
-        //right goal
-        //horizontal lines
-        g.setColor(light_grey);
-        g.drawLine(1100, 500, 1200, 500);
-        g.drawLine(1100, 499, 1200, 499);
-        g.drawLine(1100, 498, 1200, 498);
-        g.drawLine(1100, 525, 1200, 525);
-        g.drawLine(1100, 550, 1200, 550);
-        g.drawLine(1100, 575, 1200, 575);
-        g.drawLine(1100, 600, 1200, 600);
-        //vertical lines
-        g.drawLine(1100, 500, 1100, 600);
-        g.drawLine(1125, 500, 1125, 600);
-        g.drawLine(1150, 500, 1150, 600);
-        g.drawLine(1175, 500, 1175, 600);
-        g.drawLine(1200, 500, 1200, 600);
-        g.drawLine(1101, 500, 1101, 600);
-        g.drawLine(1102, 500, 1102, 600);
+        //Nets
+        //left
+        g.drawLine(30,408,95,408);
+        g.drawLine(35,416,90,416);
+        g.drawLine(39,424,86,424);
+        g.drawLine(43,432,82,432);
+        g.drawLine(46,440,79,440);
+        g.drawLine(46,400,46,440);
+        g.drawLine(79,400,79,440);
+        g.drawLine(63,400,63,440);
+        g.drawLine(25,400,46,440);
+        g.drawLine(100,400,79,440);
+        //right
+        g.drawLine(1170,408,1105,408);
+        g.drawLine(1165,416,1110,416);
+        g.drawLine(1161,424,1114,424);
+        g.drawLine(1157,432,1118,432);
+        g.drawLine(1154,440,1121,440);
+        g.drawLine(1121,400,1121,440);
+        g.drawLine(1154,400,1154,440);
+        g.drawLine(1137,400,1137,440);
+        g.drawLine(1175,400,1154,440);
+        g.drawLine(1100,400,1121,440);
+        
+        //Windows
+        g.drawLine(140,100,140,220);
+        g.drawLine(141,100,141,220);
+        g.drawLine(139,100,139,220);
+        g.drawLine(138,100,138,220);
+        g.drawLine(137,100,137,220);
+        g.drawLine(260,100,260,220);
+        g.drawLine(137,220,260,220);
+        g.drawLine(137,219,260,219);
+        g.drawLine(137,218,260,218);
+        g.drawLine(137,221,260,221);
+        g.drawLine(140,160,260,160);
+        g.drawLine(140,100,260,100);
+        g.drawLine(140,101,260,101);
+        g.drawLine(540,160,660,160);  
+        g.drawLine(940,160,1060,160);
+        g.drawLine(540,100,660,100);
+        g.drawLine(540,100,540,220);
+        g.drawLine(660,100,660,220);
+        g.drawLine(940,100,940,220);
+        g.drawLine(1060,100,1060,220);
+        g.drawLine(1061,100,1061,220);
+        g.drawLine(1059,100,1059,220);
+        g.drawLine(1062,100,1062,220);
+        g.drawLine(1063,100,1063,220);
+        g.drawLine(540,101,660,101);
+        g.drawLine(540,220,660,220);
+        g.drawLine(540,221,660,221);
+        g.drawLine(540,219,660,219);
+        g.drawLine(540,218,660,218);
+        g.drawLine(940,220,1060,220);
+        g.drawLine(940,219,1063,219);
+        g.drawLine(940,218,1063,218);
+        g.drawLine(940,100,1063,100);
+        g.drawLine(940,101,1063,101);
         
         
         
-        g.setColor(Color.WHITE);
+        g.setColor(black);
+        //left rim
+        g.drawLine(25,400,100,400);
+        g.drawLine(25,399,100,399);
+        g.drawLine(25,401,100,401);
+        g.drawLine(25,370,25,600);
+        g.drawLine(24,370,24,600);
+        g.drawLine(26,370,26,600);
+        //right rim
+        g.drawLine(1175,400,1100,400);
+        g.drawLine(1175,399,1100,399);
+        g.drawLine(1175,401,1100,401);
+        g.drawLine(1175,370,1175,600);
+        g.drawLine(1174,370,1174,600);
+        g.drawLine(1176,370,1176,600);
+       
+        
+        
+        g.setColor(Color.BLACK);
 		g.setFont(new Font("Helvetica",Font.BOLD,40));
 		g.drawString("" + SlimeGames.p1score, 50, 100);
 		g.drawString("" + SlimeGames.p2score, 1200 - 80, 100);
         
-        
-        g.setColor(Color.YELLOW);
+        g.setColor(Color.BLACK);
         g.setFont(new Font("Helvetica",Font.BOLD,40));
 		g.drawString("" + Math.round(roundTime), 1200/2 - 20, 80);
         
-    }   
-	
-	
-	@Override
-	public void actionPerformed(ActionEvent e) {
+    }
+
+    public void actionPerformed(ActionEvent e) {
 		SlimeGames.resetScore();
 		move();
 		//falling();
@@ -313,6 +344,5 @@ public class SlimeSoccer extends JFrame implements ActionListener,KeyListener{
 		// TODO Auto-generated method stub
 		
 	}
-	
-	
+    
 }

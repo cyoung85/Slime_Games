@@ -3,14 +3,13 @@ package Slime.Games;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyEvent.*;
 import java.awt.event.KeyListener;
 
 import javax.swing.*;
 
-public class SlimeSoccer extends JFrame implements ActionListener,KeyListener{
+//import testPaint.testPaint;
+public class SlimeSpleef extends JFrame implements ActionListener,KeyListener{
 	public final int ballxStart = 580;
 	public final int ballyStart = 200;
 	public int ballx = ballxStart;
@@ -32,40 +31,30 @@ public class SlimeSoccer extends JFrame implements ActionListener,KeyListener{
 	public boolean lFalling = true;
 	public boolean rFalling = true;
 	public final double gravity = 0.5;
-	
-	
-	
-	private double defaultRoundTime = 10;
+	private double defaultRoundTime = 60;
 	private double roundTime = defaultRoundTime;
 	private static Timer timer;
 	public static final int TIMER_SPEED = 12;
-	//private KeyListener key = null;
 	
 	//Frame Declarations
-	SlimeSoccer(){
+		SlimeSpleef(){
         setSize(1200, 700);
-        setTitle("Slime Soccer");
+        setTitle("Slime Spleef");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         setResizable(false);
         
         timer = new Timer(12, this);
         timer.start();
-        
-		addKeyListener(this);
+        addKeyListener(this);
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(false);
-        //Slimes sl = new Slimes();
         
-        //add(sl);
     }
 
     public static void main(String[] args) {
-         SlimeSoccer m = new SlimeSoccer();
-         
+         SlimeSpleef m = new SlimeSpleef();
          m.repaint(); 
-         
-         
     }
 
     //@Override
@@ -75,16 +64,20 @@ public class SlimeSoccer extends JFrame implements ActionListener,KeyListener{
     	Color light_blue = new Color(51,153,255);
     	g.setColor(light_blue);
         g.fillRect(0, 0,1200, 700 );
+        
         Color dark_green = new Color(0,153,0);
-        g.setColor(dark_green);
-        g.fillRect(0, 600,1200, 100 );
+        Color dark_red = new Color(204,0,0); // used for the hit spaces
+        Color light_green = new Color(0,255,100);
+        Color white = new Color(255,255,255);
+        Color light_grey = new Color(204,204,204);
+        
         
         g.setColor(Color.white);
     	g.fillOval(ballx, bally, 40, 40);
     	
     	//left slime
         Color black = new Color(0,0,0);
-        Color white = new Color(255,255,255);
+        
         Color red = new Color(255,0,0);
         g.setColor(red);
         g.fillArc(leftx, lefty, 100, 100, 0, 180);
@@ -100,46 +93,48 @@ public class SlimeSoccer extends JFrame implements ActionListener,KeyListener{
         g.fillOval(rightx+35, righty+10, 15, 15);
         g.setColor(black);
         g.fillOval(rightx+35, righty+10, 10, 10);
-    	
         
-        Color light_grey = new Color(204,204,204);
-        //left goal
-        //horizontal lines
-        g.setColor(light_grey);
-        g.drawLine(0, 500, 100, 500);
-        g.drawLine(0, 499, 100, 499);
-        g.drawLine(0, 498, 100, 498);
-        g.drawLine(0, 525, 100, 525);
-        g.drawLine(0, 550, 100, 550);
-        g.drawLine(0, 575, 100, 575);
-        g.drawLine(0, 600, 100, 600);
-        //vertical lines
-        g.drawLine(0, 500, 0, 600);
-        g.drawLine(25, 500, 25, 600);
-        g.drawLine(50, 500, 50, 600);
-        g.drawLine(75, 500, 75, 600);
-        g.drawLine(100, 500, 100, 600);
-        g.drawLine(99, 500, 99, 600);
-        g.drawLine(98, 500, 98, 600);
-        //right goal
-        //horizontal lines
-        g.setColor(light_grey);
-        g.drawLine(1100, 500, 1200, 500);
-        g.drawLine(1100, 499, 1200, 499);
-        g.drawLine(1100, 498, 1200, 498);
-        g.drawLine(1100, 525, 1200, 525);
-        g.drawLine(1100, 550, 1200, 550);
-        g.drawLine(1100, 575, 1200, 575);
-        g.drawLine(1100, 600, 1200, 600);
-        //vertical lines
-        g.drawLine(1100, 500, 1100, 600);
-        g.drawLine(1125, 500, 1125, 600);
-        g.drawLine(1150, 500, 1150, 600);
-        g.drawLine(1175, 500, 1175, 600);
-        g.drawLine(1200, 500, 1200, 600);
-        g.drawLine(1101, 500, 1101, 600);
-        g.drawLine(1102, 500, 1102, 600);
+        //left 3 sections for spleef 
+        g.setColor(dark_green); // default set to normal grass color
+        g.fillRect(0, 600,199, 100 ); //left side left section
+        //g.setColor(dark_red); 
+        g.fillRect(200, 600,399, 100 ); //left side middle section
+        g.setColor(dark_green);
+        g.fillRect(400, 600,599, 100 ); //left side right section
         
+        //right 3 sections for spleef
+        //g.setColor(dark_red); 
+        g.fillRect(600, 600,799, 100 ); //right side left section
+        g.setColor(dark_green);
+        g.fillRect(800, 600,999, 100 ); //right side middle section
+        //g.setColor(dark_red); 
+        g.fillRect(1000, 600,1200, 100 ); //right side right section
+        
+        g.setColor(light_green);
+        //middle divider on ground
+        g.drawLine(599, 600, 599, 700);
+        g.drawLine(600, 600, 600, 700);
+        
+        g.setColor(white);
+        //left side section dividers
+        g.drawLine(199, 600, 199, 700);
+        g.drawLine(200, 600, 200, 700);
+        g.drawLine(399, 600, 399, 700);
+        g.drawLine(400, 600, 400, 700);
+
+        //right side section dividers
+        g.drawLine(799, 600, 799, 700);
+        g.drawLine(800, 600, 800, 700);
+        g.drawLine(999, 600, 999, 700);
+        g.drawLine(1000, 600, 1000, 700);
+
+        
+        g.setColor(light_grey);
+        //volleyball net
+        g.drawLine(598, 500, 598, 600);
+        g.drawLine(599, 500, 599, 600);
+        g.drawLine(600, 500, 600, 600);
+        g.drawLine(601, 500, 601, 600);
         
         
         g.setColor(Color.WHITE);
@@ -147,16 +142,13 @@ public class SlimeSoccer extends JFrame implements ActionListener,KeyListener{
 		g.drawString("" + SlimeGames.p1score, 50, 100);
 		g.drawString("" + SlimeGames.p2score, 1200 - 80, 100);
         
-        
         g.setColor(Color.YELLOW);
         g.setFont(new Font("Helvetica",Font.BOLD,40));
 		g.drawString("" + Math.round(roundTime), 1200/2 - 20, 80);
-        
     }   
 	
 	
-	@Override
-	public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e) {
 		SlimeGames.resetScore();
 		move();
 		//falling();
