@@ -30,7 +30,7 @@ public class SlimeVolleyball extends JFrame implements ActionListener,KeyListene
 	public boolean rCanJump = true;
 	public boolean lFalling = true;
 	public boolean rFalling = true;
-	public final double gravity = 0.5;
+	public final int gravity = 1;
 	private double defaultRoundTime = 60;
 	private double roundTime = defaultRoundTime;
 	private static Timer timer;
@@ -115,7 +115,7 @@ public class SlimeVolleyball extends JFrame implements ActionListener,KeyListene
     public void actionPerformed(ActionEvent e) {
 		SlimeGames.resetScore();
 		move();
-		//falling();
+		falling();
 		//timer
 		if ( roundTime > 0 ) {
 			
@@ -156,9 +156,10 @@ public class SlimeVolleyball extends JFrame implements ActionListener,KeyListene
 		//repaint();
 		//test.setText(test.getText().concat("You have clicked the button\n"));
 	}
-	public void move() {
+    public void move() {
         if(lefty==550) {
         	lCanJump= true;
+        	lFalling = false;
         }
         else {
         	
@@ -166,6 +167,7 @@ public class SlimeVolleyball extends JFrame implements ActionListener,KeyListene
         }
         if(righty==550) {
         	rCanJump= true;
+        	rFalling = false;
         }
         else {
         	
@@ -174,26 +176,39 @@ public class SlimeVolleyball extends JFrame implements ActionListener,KeyListene
 		if(leftx<0) {
         	leftx=0;
         }
-        if(rightx<0) {
-        	rightx = 0;
+        if(rightx<600) {
+        	rightx = 600;
         }
+        
         if(righty<0) {
         	righty = 0;
         }
         if(lefty<0) {
         	lefty = 0;
         }
-        if(leftx>1100) {
-        	leftx=1100;
+        if(leftx>500) {
+        	leftx=500;
         }
         if(rightx>1100) {
         	rightx = 1100;
         }
         if(righty>550) {
         	righty = 550;
+        	rCanJump = true;
+        	
+        	rightdy = 0;
+        }
+        else {
+        	rCanJump = false;
         }
         if(lefty>550) {
         	lefty = 550;
+        	lCanJump = true;
+        	
+        	leftdy = 0;
+        }
+        else {
+        	lCanJump = false;
         }
         
        
@@ -203,16 +218,16 @@ public class SlimeVolleyball extends JFrame implements ActionListener,KeyListene
         righty += rightdy;
         
     }
-	/*
+	
 	public void falling() {
-		if(lFalling) {
+		if(lefty<550) {
 			leftdy+=gravity;
 		}
-		if(rFalling) {
+		if(righty<550) {
 			rightdy+=gravity;
 		}
 	}
-	*/
+	
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -221,8 +236,11 @@ public class SlimeVolleyball extends JFrame implements ActionListener,KeyListene
 		if(key == KeyEvent.VK_A) {
 			leftdx= -5;
 		}
-		if(key == KeyEvent.VK_W) {
-			leftdy= -5;
+		if(key == KeyEvent.VK_W && lefty == 550) {
+			
+			leftdy= -20;
+			lFalling = true;
+			lCanJump = false;
 		}
 		if(key == KeyEvent.VK_D) {
 			leftdx= 5;
@@ -230,13 +248,15 @@ public class SlimeVolleyball extends JFrame implements ActionListener,KeyListene
 		if(key == KeyEvent.VK_LEFT) {
 			rightdx= -5;
 		}
-		if(key == KeyEvent.VK_UP) {
-			rightdy= -5;
+		if(key == KeyEvent.VK_UP && righty == 550) {
+			rightdy= -20;
+			rFalling = true;
+			rCanJump = false;
 		}
 		if(key == KeyEvent.VK_RIGHT) {
 			rightdx= 5;
 		}
-		repaint();
+		//repaint();
 	}
 
 	@Override
@@ -261,7 +281,7 @@ public class SlimeVolleyball extends JFrame implements ActionListener,KeyListene
 		if(key == KeyEvent.VK_RIGHT) {
 			rightdx= 0;
 		}
-		repaint();
+		//repaint();
 	}
 
 	@Override

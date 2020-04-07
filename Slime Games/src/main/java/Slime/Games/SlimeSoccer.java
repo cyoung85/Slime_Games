@@ -29,13 +29,13 @@ public class SlimeSoccer extends JFrame implements ActionListener,KeyListener{
 	public int rightdy=0;
 	public boolean lCanJump = true;
 	public boolean rCanJump = true;
-	public boolean lFalling = true;
-	public boolean rFalling = true;
-	public final double gravity = 0.5;
+	public boolean lFalling = false;
+	public boolean rFalling = false;
+	public final int gravity = 1;
 	
 	
 	
-	private double defaultRoundTime = 10;
+	private double defaultRoundTime = 20;
 	private double roundTime = defaultRoundTime;
 	private static Timer timer;
 	public static final int TIMER_SPEED = 12;
@@ -159,7 +159,7 @@ public class SlimeSoccer extends JFrame implements ActionListener,KeyListener{
 	public void actionPerformed(ActionEvent e) {
 		SlimeGames.resetScore();
 		move();
-		//falling();
+		falling();
 		//timer
 		if ( roundTime > 0 ) {
 			
@@ -203,6 +203,7 @@ public class SlimeSoccer extends JFrame implements ActionListener,KeyListener{
 	public void move() {
         if(lefty==550) {
         	lCanJump= true;
+        	lFalling = false;
         }
         else {
         	
@@ -210,6 +211,7 @@ public class SlimeSoccer extends JFrame implements ActionListener,KeyListener{
         }
         if(righty==550) {
         	rCanJump= true;
+        	rFalling = false;
         }
         else {
         	
@@ -235,9 +237,21 @@ public class SlimeSoccer extends JFrame implements ActionListener,KeyListener{
         }
         if(righty>550) {
         	righty = 550;
+        	rCanJump = true;
+        	
+        	rightdy = 0;
+        }
+        else {
+        	rCanJump = false;
         }
         if(lefty>550) {
         	lefty = 550;
+        	lCanJump = true;
+        	
+        	leftdy = 0;
+        }
+        else {
+        	lCanJump = false;
         }
         
        
@@ -247,16 +261,16 @@ public class SlimeSoccer extends JFrame implements ActionListener,KeyListener{
         righty += rightdy;
         
     }
-	/*
+	
 	public void falling() {
-		if(lFalling) {
+		if(lefty<550) {
 			leftdy+=gravity;
 		}
-		if(rFalling) {
+		if(righty<550) {
 			rightdy+=gravity;
 		}
 	}
-	*/
+	
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -265,8 +279,11 @@ public class SlimeSoccer extends JFrame implements ActionListener,KeyListener{
 		if(key == KeyEvent.VK_A) {
 			leftdx= -5;
 		}
-		if(key == KeyEvent.VK_W) {
-			leftdy= -5;
+		if(key == KeyEvent.VK_W && lefty == 550) {
+			
+			leftdy= -20;
+			lFalling = true;
+			lCanJump = false;
 		}
 		if(key == KeyEvent.VK_D) {
 			leftdx= 5;
@@ -274,13 +291,15 @@ public class SlimeSoccer extends JFrame implements ActionListener,KeyListener{
 		if(key == KeyEvent.VK_LEFT) {
 			rightdx= -5;
 		}
-		if(key == KeyEvent.VK_UP) {
-			rightdy= -5;
+		if(key == KeyEvent.VK_UP && righty == 550) {
+			rightdy= -20;
+			rFalling = true;
+			rCanJump = false;
 		}
 		if(key == KeyEvent.VK_RIGHT) {
 			rightdx= 5;
 		}
-		repaint();
+		//repaint();
 	}
 
 	@Override
@@ -305,7 +324,7 @@ public class SlimeSoccer extends JFrame implements ActionListener,KeyListener{
 		if(key == KeyEvent.VK_RIGHT) {
 			rightdx= 0;
 		}
-		repaint();
+		//repaint();
 	}
 
 	@Override
