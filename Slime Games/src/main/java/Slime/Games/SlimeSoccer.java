@@ -15,6 +15,8 @@ public class SlimeSoccer extends JFrame implements ActionListener,KeyListener{
 	public final int ballyStart = 200;
 	public int ballx = ballxStart;
 	public int bally = ballyStart;
+	public int balldx = 0;
+	public int balldy = 0;
 	public final int leftxStart = 150;
 	public final int leftyStart = 550;
 	public final int rightxStart = 950;
@@ -35,7 +37,7 @@ public class SlimeSoccer extends JFrame implements ActionListener,KeyListener{
 	
 	
 	
-	private double defaultRoundTime = 20;
+	private double defaultRoundTime = 10;
 	private double roundTime = defaultRoundTime;
 	private static Timer timer;
 	public static final int TIMER_SPEED = 12;
@@ -187,6 +189,7 @@ public class SlimeSoccer extends JFrame implements ActionListener,KeyListener{
 				lefty = leftyStart;
 				rightx = rightxStart;
 				righty = rightyStart;
+				bally = ballyStart;
 				leftdx= 0;
 				leftdy= 0;
 				leftdx= 0;
@@ -253,12 +256,16 @@ public class SlimeSoccer extends JFrame implements ActionListener,KeyListener{
         else {
         	lCanJump = false;
         }
-        
+        if(bally>560) {
+        	bally = 560;
+        	balldy = 0;
+        }
        
 		leftx += leftdx;
         lefty += leftdy;
         rightx += rightdx;
         righty += rightdy;
+        bally+=balldy;
         
     }
 	
@@ -268,6 +275,9 @@ public class SlimeSoccer extends JFrame implements ActionListener,KeyListener{
 		}
 		if(righty<550) {
 			rightdy+=gravity;
+		}
+		if(bally<580) {
+			balldy+=gravity;
 		}
 	}
 	

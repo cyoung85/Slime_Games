@@ -14,6 +14,8 @@ public class SlimeBasketball extends JFrame implements ActionListener,KeyListene
 	public final int ballyStart = 200;
 	public int ballx = ballxStart;
 	public int bally = ballyStart;
+	public int balldx = 0;
+	public int balldy = 0;
 	public final int leftxStart = 150;
 	public final int leftyStart = 550;
 	public final int rightxStart = 950;
@@ -31,6 +33,8 @@ public class SlimeBasketball extends JFrame implements ActionListener,KeyListene
 	public boolean lFalling = true;
 	public boolean rFalling = true;
 	public final int gravity = 1;
+	
+	
 	private double defaultRoundTime = 60;
 	private double roundTime = defaultRoundTime;
 	private static Timer timer;
@@ -218,6 +222,7 @@ public class SlimeBasketball extends JFrame implements ActionListener,KeyListene
 				lefty = leftyStart;
 				rightx = rightxStart;
 				righty = rightyStart;
+				bally = ballyStart;
 				leftdx= 0;
 				leftdy= 0;
 				leftdx= 0;
@@ -284,12 +289,16 @@ public class SlimeBasketball extends JFrame implements ActionListener,KeyListene
         else {
         	lCanJump = false;
         }
-        
+        if(bally>560) {
+        	bally = 560;
+        	balldy = 0;
+        }
        
 		leftx += leftdx;
         lefty += leftdy;
         rightx += rightdx;
         righty += rightdy;
+        bally+=balldy;
         
     }
 	
@@ -299,6 +308,9 @@ public class SlimeBasketball extends JFrame implements ActionListener,KeyListene
 		}
 		if(righty<550) {
 			rightdy+=gravity;
+		}
+		if(bally<580) {
+			balldy+=gravity;
 		}
 	}
 	
