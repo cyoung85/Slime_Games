@@ -215,7 +215,7 @@ public class SlimeVolleyball extends JFrame implements ActionListener,KeyListene
         }
         if(bally>560) {
         	bally = 560;
-        	balldy = 0;
+        	balldy *= -.95;
         }
        
 		leftx += leftdx;
@@ -233,7 +233,7 @@ public class SlimeVolleyball extends JFrame implements ActionListener,KeyListene
 		if(righty<550) {
 			rightdy+=gravity;
 		}
-		if(bally<580) {
+		if(bally<560) {
 			balldy+=gravity;
 		}
 	}
