@@ -137,7 +137,7 @@ public class MainMenu implements ActionListener {
 
 		case "Play Spleef":
 			//SlimeSpleef p = new SlimeSpleef();
-
+			break;
 		default:
 			break;
 		}
