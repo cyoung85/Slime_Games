@@ -150,7 +150,7 @@ public class MainMenu implements ActionListener {
 		@Override
 		protected void paintComponent(Graphics g){
 
-			//socccer ball
+			//soccer ball
 			g.setColor(Color.WHITE);
 			g.fillOval(1200, 200, 65, 65);
 

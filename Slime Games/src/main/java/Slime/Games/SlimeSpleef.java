@@ -10,36 +10,39 @@ import javax.swing.*;
 
 //import testPaint.testPaint;
 public class SlimeSpleef extends JFrame implements ActionListener,KeyListener{
-	public final int ballxStart = 580;
-	public final int ballyStart = 200;
-	public int ballx = ballxStart;
-	public int bally = ballyStart;
+	public final int ballxStart = 580; //ball x start position
+	public final int ballyStart = 200; //ball y start position
+	public int ballx = ballxStart; //ball x current position
+	public int bally = ballyStart; //ball y current position
 	public int balldx = 0;
 	public int balldy = 0;
-	public final int leftxStart = 150;
-	public final int leftyStart = 550;
-	public final int rightxStart = 950;
-	public final int rightyStart = 550;
-	public int leftx = leftxStart;
-	public int lefty = leftyStart;
-	public int rightx = rightxStart;
-	public int righty = rightyStart;
-	public int leftdx=0;
-	public int leftdy=0;
-	public int rightdx=0;
-	public int rightdy=0;
+	public final int leftxStart = 150; //left slime x start position
+	public final int leftyStart = 550; //left slime y start position 
+	public final int rightxStart = 950; //right slime x start position
+	public final int rightyStart = 550; //right slime y start position
+	public int leftx = leftxStart; //left slime x current position
+	public int lefty = leftyStart; //left slime y current position
+	public int rightx = rightxStart; //right slime x current position
+	public int righty = rightyStart; //right slime y current position
+	public int leftdx=0; //left slime x direction change
+	public int leftdy=0; //left slime y direction change
+	public int rightdx=0; //right slime x direction change
+	public int rightdy=0; //right slime y direction change
 	public boolean lCanJump = true;
 	public boolean rCanJump = true;
-	public boolean lFalling = true;
-	public boolean rFalling = true;
+	public boolean lFalling = false;
+	public boolean rFalling = false;
 	public final int gravity = 1;
-	private double defaultRoundTime = 60;
-	private double roundTime = defaultRoundTime;
+	
+	
+	
+	private double defaultRoundTime = 60; //default time for each game
+	private double roundTime = defaultRoundTime; //current remaining time
 	private static Timer timer;
 	public static final int TIMER_SPEED = 12;
 	
 	//Frame Declarations
-		SlimeSpleef(){
+	SlimeSpleef(){
         setSize(1200, 700);
         setTitle("Slime Spleef");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -57,7 +60,7 @@ public class SlimeSpleef extends JFrame implements ActionListener,KeyListener{
     public static void main(String[] args) {
          SlimeSpleef m = new SlimeSpleef();
          m.repaint(); 
-    }
+    } 
 
     //@Override
     public void paint(Graphics g) 
@@ -67,7 +70,7 @@ public class SlimeSpleef extends JFrame implements ActionListener,KeyListener{
     	g.setColor(light_blue);
         g.fillRect(0, 0,1200, 700 );
         
-        Color dark_green = new Color(0,153,0);
+        Color dark_green = new Color(0,153,0); //used for the not hit spaces
         Color dark_red = new Color(204,0,0); // used for the hit spaces
         Color light_green = new Color(0,255,100);
         Color white = new Color(255,255,255);
@@ -138,12 +141,13 @@ public class SlimeSpleef extends JFrame implements ActionListener,KeyListener{
         g.drawLine(600, 500, 600, 600);
         g.drawLine(601, 500, 601, 600);
         
-        
+        //displays the scores
         g.setColor(Color.WHITE);
 		g.setFont(new Font("Helvetica",Font.BOLD,40));
 		g.drawString("" + SlimeGames.p1score, 50, 100);
 		g.drawString("" + SlimeGames.p2score, 1200 - 80, 100);
         
+		//displays the time
         g.setColor(Color.YELLOW);
         g.setFont(new Font("Helvetica",Font.BOLD,40));
 		g.drawString("" + Math.round(roundTime), 1200/2 - 20, 80);
@@ -154,7 +158,11 @@ public class SlimeSpleef extends JFrame implements ActionListener,KeyListener{
 		SlimeGames.resetScore();
 		move();
 		falling();
-		//timer
+		/*
+		 * timer
+		 * it counts down the time and when there is no time it checks the score for a winner or tie
+		 * it also prompts if you want to play again
+		 */
 		if ( roundTime > 0 ) {
 			
 			roundTime -= TIMER_SPEED * .001;
@@ -175,7 +183,7 @@ public class SlimeSpleef extends JFrame implements ActionListener,KeyListener{
 			}
 			int input = JOptionPane.showOptionDialog( new JFrame(), notification, "Game Over", JOptionPane.YES_NO_OPTION,
 					                      JOptionPane.PLAIN_MESSAGE, null, null, null);
-			if (input == JOptionPane.YES_OPTION){
+			if (input == JOptionPane.YES_OPTION){//resetting the timer, players, and ball when played again
 				roundTime = defaultRoundTime;
 				leftx = leftxStart;
 				lefty = leftyStart;
@@ -188,15 +196,17 @@ public class SlimeSpleef extends JFrame implements ActionListener,KeyListener{
 				rightdx= 0;
 				rightdy= 0;
 				timer.start();
-			} else {
+			} else { //closes the program when not playing again
 				System.exit(0);
 			}
 		}
-		//repaint();
-		//test.setText(test.getText().concat("You have clicked the button\n"));
+		
 	}
     public void move() {
-        if(lefty==550) {
+    	/*
+         * checking to see if the player can jump or if they are falling
+         */
+    	if(lefty==550) {
         	lCanJump= true;
         	lFalling = false;
         }
@@ -212,6 +222,10 @@ public class SlimeSpleef extends JFrame implements ActionListener,KeyListener{
         	
         	rCanJump = false;
         }
+        /*
+		 * checking boundaries for the two players and resetting when out of the boundary
+		 * also makes sure the players stay on their half without crossing the middle
+		 */
         if(leftx<0) {
         	leftx=0;
         }
@@ -231,6 +245,9 @@ public class SlimeSpleef extends JFrame implements ActionListener,KeyListener{
         if(rightx>1100) {
         	rightx = 1100;
         }
+        /*
+         * checking the lower boundary for the ground for the players
+         */
         if(righty>550) {
         	righty = 550;
         	rCanJump = true;
@@ -249,6 +266,9 @@ public class SlimeSpleef extends JFrame implements ActionListener,KeyListener{
         else {
         	lCanJump = false;
         }
+        /*
+         * checking the lower boundary for the ball and having it bounce back
+         */
         if(bally>560) {
         	bally = 560;
         	balldy *= -.95;
@@ -262,7 +282,9 @@ public class SlimeSpleef extends JFrame implements ActionListener,KeyListener{
         bally+=balldy;
         
     }
-	
+    /*
+	 * code for gravity for the players and ball
+	 */
 	public void falling() {
 		if(lefty<550) {
 			leftdy+=gravity;
@@ -275,9 +297,12 @@ public class SlimeSpleef extends JFrame implements ActionListener,KeyListener{
 		}
 	}
 	
+	/*
+	 * code to move the two players in the corresponding direction that was pressed
+	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
+		
 		int key = e.getKeyCode();
 		
 		if(key == KeyEvent.VK_A) {
@@ -303,12 +328,16 @@ public class SlimeSpleef extends JFrame implements ActionListener,KeyListener{
 		if(key == KeyEvent.VK_RIGHT) {
 			rightdx= 5;
 		}
-		//repaint();
+		
 	}
 
+	
+	/*
+	 * code to reset the movement to 0 for the two players when the key is released
+	 */
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
+		
 		int key = e.getKeyCode();
 		if(key == KeyEvent.VK_A) {
 			leftdx= 0;
@@ -328,7 +357,7 @@ public class SlimeSpleef extends JFrame implements ActionListener,KeyListener{
 		if(key == KeyEvent.VK_RIGHT) {
 			rightdx= 0;
 		}
-		//repaint();
+		
 	}
 
 	@Override
