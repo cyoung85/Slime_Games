@@ -125,7 +125,19 @@ public class MainMenu implements ActionListener {
 		switch(action) {
 
 		case "Play Soccer":
-			SlimeSoccer s = new SlimeSoccer();
+			//SlimeSoccer s = new SlimeSoccer();
+			
+			  javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			         public void run() {
+			            JFrame frame = new JFrame("Slime Soccer");
+			            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			            frame.setContentPane(new SlimeSoccer(1200, 700)); 
+			            frame.pack();            // Preferred size of BallWorld
+			            frame.setResizable(false);
+			            frame.setVisible(true);  
+			            }
+			      });
+			
 			break;
 
 		case "Play Basketball":
@@ -138,7 +150,7 @@ public class MainMenu implements ActionListener {
 
 		case "Play Spleef":
 			SlimeSpleef p = new SlimeSpleef();
-
+			
 		default:
 			break;
 		}
