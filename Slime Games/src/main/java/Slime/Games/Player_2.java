@@ -9,33 +9,34 @@ package Slime.Games;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import javax.swing.InputMap;
 import javax.swing.JComponent;
 
 
-@SuppressWarnings("serial")
-public class Player_1 extends JComponent {
+public class Player_2 extends JComponent{
 	private static int x;
 	private static int y;
 	public int dx = 4;
 	public int dy;
-
 	
-	public Player_1(int x, int y) {
-	Player_1.x = x;
-	Player_1.y = y;
+	public InputMap am;
+	
+	public Player_2(int x, int y) {
+	Player_2.x = x;
+	Player_2.y = y;
 	}
 	
 	//creates the slime in the window
 	public void draw(Graphics g){
         Color black = new Color(0,0,0);
         Color white = new Color(255,255,255);
-        Color red = new Color(255,0,0);
-        g.setColor(red);
+        Color yellow = new Color(255,255,0);
+        g.setColor(yellow);
         g.fillArc(x, y, 100, 100, 0, 180);
         g.setColor(white);
-        g.fillOval(x+65, y+10, 15, 15);
+        g.fillOval(x+35, y+10, 15, 15);
         g.setColor(black);
-        g.fillOval(x+70, y+10, 10, 10);
+        g.fillOval(x+35, y+10, 10, 10);
 	}
 	
 	public int getX() {
@@ -44,7 +45,6 @@ public class Player_1 extends JComponent {
 	public int getY(){
 		return y;
 	}	
-	
 	public void moveLeft(){
 		x -= dx;
 	}
