@@ -12,9 +12,10 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.Formatter;
 
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 
-public class SlimeBall extends Component {
+public class SlimeBall extends JComponent {
 	private static float x, y;
 	private static float xSpeed, ySpeed;
 	private static float radius;
