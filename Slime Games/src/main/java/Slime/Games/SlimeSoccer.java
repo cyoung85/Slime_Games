@@ -106,6 +106,32 @@ public class SlimeSoccer extends JPanel {
 					// Refresh the display
 					repaint();
 					// Delay and give other thread a chance
+					ap.put("P1 Move Left", new AbstractAction() {
+						public void actionPerformed(ActionEvent e) {
+							p1.moveLeft();
+						}
+					});
+
+					ap.put("P1 Move Right", new AbstractAction() {
+						public void actionPerformed(ActionEvent e) {
+							p1.moveRight();
+						}
+					});
+					try {
+						Thread.sleep(1);
+					} catch (InterruptedException ex) {
+					}
+					ap.put("P2 Move Left", new AbstractAction() {
+						public void actionPerformed(ActionEvent e) {
+							p2.moveLeft();
+						}
+					});
+
+					ap.put("P2 Move Right", new AbstractAction() {
+						public void actionPerformed(ActionEvent e) {
+							p2.moveRight();
+						}
+					});
 					try {
 						Thread.sleep(1000 / UPDATE_RATE);
 					} catch (InterruptedException ex) {
