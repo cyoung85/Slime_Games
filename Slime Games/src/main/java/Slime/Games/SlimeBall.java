@@ -36,7 +36,7 @@ public class SlimeBall extends JComponent {
 		g.fillOval((int)(x - radius), (int)(y - radius), (int)(2 * radius), (int)(2 * radius));
 	}
 	
-	public void moveWithColision(WindowBounds window, Player_1 p1) {
+	public void moveWithColision(WindowBounds window, Player_1 p1, Player_2 p2) {
 		//gets the bounds of the ball subtracted by the radius to prevent clipping into the wall
 		float ballMinX = window.getMinX() + radius;
 	    float ballMinY = window.getMinY() + radius;
@@ -46,6 +46,11 @@ public class SlimeBall extends JComponent {
 	    //gets the location of player 1
 	    int p1X = p1.getX();
 	    int p1Y = p1.getY();
+	    
+	    int p2X = p2.getX();
+	    int p2Y = p2.getY();
+	    
+	    
 	    
 	    // gets the new position for the ball after each frame
 	    x += xSpeed;
@@ -67,6 +72,7 @@ public class SlimeBall extends JComponent {
 	         ySpeed = -ySpeed;
 	         y = ballMaxY-100;
 	      }
+	    
 	}
 	 // Return the magnitude of speed. 
 	   public float getSpeed() {
