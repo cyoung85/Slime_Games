@@ -125,7 +125,7 @@ public class SlimeBall extends JComponent {
 		    }
 	    }
 	    else if(game == "basketball") {
-	    	if (x>25&&x<100&&y>390&&y<405&&ySpeed>0) { //left hoop scoring
+	    	if (x>25&&x<100&&y>390&&y<420&&ySpeed>0) { //left hoop scoring
 	    		SlimeGames.p2score++;
 		    	x = window.getMaxX()/2 -radius;
 		    	y = 100;
@@ -134,13 +134,13 @@ public class SlimeBall extends JComponent {
 		    	p2.setX(950);
 		    	p2.setY(550);
 	    	}
-	    	if (x>25&&x<110&&y>390&&y<405&&ySpeed<0) { //left hoop bounce back under rim
+	    	if (x>25&&x<110&&y>390&&y<420&&ySpeed<0) { //left hoop bounce back under rim
 	    		ySpeed *= -1;
 	    	}
 	    	if (x>10&&x<26&&y<420&&y>350) { //left hoop back board
 	    		xSpeed *= -1;
 	    	}
-	    	if (x>1100&&x<1175&&y>390&&y<405&&ySpeed>0) { //right hoop scoring
+	    	if (x>1100&&x<1175&&y>390&&y<420&&ySpeed>0) { //right hoop scoring
 	    		SlimeGames.p1score++;
 		    	x = window.getMaxX()/2 -radius;
 		    	y = 100;
@@ -149,7 +149,7 @@ public class SlimeBall extends JComponent {
 		    	p2.setX(950);
 		    	p2.setY(550);
 	    	}
-	    	if (x>1090&&x<1175&&y>390&&y<405&&ySpeed<0) { //right hoop bounce back under rim
+	    	if (x>1090&&x<1175&&y>390&&y<420&&ySpeed<0) { //right hoop bounce back under rim
 	    		ySpeed *= -1;
 	    	}
 	    	if (x>1174&&x<1190&&y<420&&y>350) {  //right hoop back board
