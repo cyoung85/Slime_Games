@@ -44,6 +44,12 @@ public class Player_1 extends JComponent {
 	public int getY(){
 		return y;
 	}	
+	public void setX(int n) {
+		x = n;
+	}
+	public void setY(int n) {
+		y = n;
+	}
 	
 	public void moveLeft(){
 		x -= dx;

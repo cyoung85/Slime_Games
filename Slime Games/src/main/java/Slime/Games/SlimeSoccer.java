@@ -147,7 +147,7 @@ public class SlimeSoccer extends JPanel {
 	 * and response.
 	 */
 	public void gameUpdate() {
-		ball.moveWithColision(window, p1);
+		ball.moveWithColision(window, p1,p2);
 	}
 
 	// makes sure the window loads in properly

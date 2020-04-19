@@ -146,7 +146,7 @@ public class SlimeBasketball extends JPanel {
 	 * and response.
 	 */
 	public void gameUpdate() {
-		ball.moveWithColision(window, p1);
+		ball.moveWithColision(window, p1,p2);
 	}
 
 	// makes sure the window loads in properly
@@ -198,18 +198,18 @@ public class SlimeBasketball extends JPanel {
 	        g.drawLine(25,400,100,400);
 	        g.drawLine(25,399,100,399);
 	        g.drawLine(25,401,100,401);
-	        g.drawLine(25,370,25,600);
-	        g.drawLine(24,370,24,600);
-	        g.drawLine(26,370,26,600);
+	        g.drawLine(25,350,25,600);
+	        g.drawLine(24,350,24,600);
+	        g.drawLine(26,350,26,600);
 	        //right rim
 	        g.drawLine(1175,400,1100,400);
 	        g.drawLine(1175,399,1100,399);
 	        g.drawLine(1175,401,1100,401);
-	        g.drawLine(1175,370,1175,600);
-	        g.drawLine(1174,370,1174,600);
-	        g.drawLine(1176,370,1176,600);
+	        g.drawLine(1175,350,1175,600);
+	        g.drawLine(1174,350,1174,600);
+	        g.drawLine(1176,350,1176,600);
 			// displays scores
-			g.setColor(Color.WHITE);
+			g.setColor(Color.BLACK);
 			g.setFont(new Font("Helvetica", Font.BOLD, 40));
 			g.drawString("" + SlimeGames.p1score, 50, 100);
 			g.drawString("" + SlimeGames.p2score, 1200 - 80, 100);

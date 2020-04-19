@@ -19,7 +19,7 @@ public class SlimeBall extends JComponent {
 	private static float x, y;
 	private static float xSpeed, ySpeed;
 	private static float radius;
-	private static float gravity = 1;
+	private static float gravity;
 	private String game;
 	
 	public SlimeBall(float x, float y, float radius, float speed, float angleImpact, String gameType) {
@@ -30,6 +30,15 @@ public class SlimeBall extends JComponent {
 	     SlimeBall.ySpeed = (float)(-speed * (float)Math.sin(Math.toRadians(angleImpact)));
 	     SlimeBall.radius = radius;
 	     game = gameType;
+	     if (game=="basketball") {
+	    	 gravity = (float) 0.5;
+	     }
+	     else if (game =="soccer"){
+	    	 gravity = 1;
+	     }
+	     else {
+	    	 gravity = (float) 0.75;
+	     }
 	}
 	
 	// creates a magenta ball (color just for testing)
@@ -39,7 +48,7 @@ public class SlimeBall extends JComponent {
 		g.fillOval((int)(x - radius), (int)(y - radius), (int)(2 * radius), (int)(2 * radius));
 	} 
 	
-	public void moveWithColision(WindowBounds window, Player_1 p1) {
+	public void moveWithColision(WindowBounds window, Player_1 p1, Player_2 p2) {
 		//gets the bounds of the ball subtracted by the radius to prevent clipping into the wall
 		float ballMinX = window.getMinX() + radius;
 	    float ballMinY = window.getMinY() + radius;
@@ -68,9 +77,21 @@ public class SlimeBall extends JComponent {
 	         y = ballMinY;
 	         
 	      } else if (y > ballMaxY-100) {
-	         ySpeed *= -0.85;//friction;
-	         y = ballMaxY-100;
-	         xSpeed *= 0.90; //friction
+	    	  	if(game=="volleyball"&&x<600) {
+	    	  		SlimeGames.p2score++;
+	    	  		x = window.getMaxX()/2 -radius;
+			    	y = 100;
+	    	  	} else if(game=="volleyball"&&x>600) {
+	    	  		SlimeGames.p1score++;
+	    	  		x = window.getMaxX()/2 -radius;
+			    	y = 100;
+	    	  	}
+	    	  	else {
+	    	  		ySpeed *= -0.85;//friction;
+	    	  		y = ballMaxY-100;
+	    	  		xSpeed *= 0.90; //friction
+	    	  	}
+	    	  
 	        
 	      } else if (y<ballMaxY-101){
 	    	  ySpeed+=gravity;
@@ -78,25 +99,62 @@ public class SlimeBall extends JComponent {
 	      }
 	    //goal interactions
 	    if (game == "soccer") {
-	    	if(x>0&&x<100&&y<500&&y>475) {
+	    	if(x>0&&x<105&&y<500&&y>475) {//left goal top
 		    	ySpeed *= -0.95;
 		    }	
-		    if(x>1100&&x<1200&&y<500&&y>475) {
+		    if(x>1095&&x<1200&&y<500&&y>475) {//right goal top
 		    	ySpeed *= -0.95;
 		    }	
-		    if(x<100&&y>500&&y<600) {
+		    if(x<100&&y>500&&y<600) { //left goal scoring
 		    	SlimeGames.p2score++;
 		    	x = window.getMaxX()/2 -radius;
 		    	y = 100;
+		    	p1.setX(150);
+		    	p1.setY(550);
+		    	p2.setX(950);
+		    	p2.setY(550);
 		    }
-		    if(x>1100&&x<1200&&y>500&&y<600) {
+		    if(x>1100&&x<1200&&y>500&&y<600) { //right goal scoring
 		    	SlimeGames.p1score++;
 		    	x = window.getMaxX()/2 -radius;
 		    	y = 100;
+		    	p1.setX(150);
+		    	p1.setY(550);
+		    	p2.setX(950);
+		    	p2.setY(550);
 		    }
 	    }
 	    else if(game == "basketball") {
-	    	
+	    	if (x>25&&x<100&&y>390&&y<405&&ySpeed>0) { //left hoop scoring
+	    		SlimeGames.p2score++;
+		    	x = window.getMaxX()/2 -radius;
+		    	y = 100;
+		    	p1.setX(150);
+		    	p1.setY(550);
+		    	p2.setX(950);
+		    	p2.setY(550);
+	    	}
+	    	if (x>25&&x<110&&y>390&&y<405&&ySpeed<0) { //left hoop bounce back under rim
+	    		ySpeed *= -1;
+	    	}
+	    	if (x>10&&x<26&&y<420&&y>350) { //left hoop back board
+	    		xSpeed *= -1;
+	    	}
+	    	if (x>1100&&x<1175&&y>390&&y<405&&ySpeed>0) { //right hoop scoring
+	    		SlimeGames.p1score++;
+		    	x = window.getMaxX()/2 -radius;
+		    	y = 100;
+		    	p1.setX(150);
+		    	p1.setY(550);
+		    	p2.setX(950);
+		    	p2.setY(550);
+	    	}
+	    	if (x>1090&&x<1175&&y>390&&y<405&&ySpeed<0) { //right hoop bounce back under rim
+	    		ySpeed *= -1;
+	    	}
+	    	if (x>1174&&x<1190&&y<420&&y>350) {  //right hoop back board
+	    		xSpeed *= -1;
+	    	}
 	    }
 	    else if(game == "volleyball") {
 	    	

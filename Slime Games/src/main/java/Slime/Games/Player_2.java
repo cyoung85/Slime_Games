@@ -1,7 +1,7 @@
 /*
- * This class is used to create player 1's slime (AKA the left slime)
+ * This class is used to create player 2's slime (AKA the right slime)
  * This also handles the movement for the slime and is implemneted in the SlimeSoccer class
- * to set up, Player_1(float for starting x cordinate, float for starting y cordinate)
+ * to set up, Player_2(float for starting x cordinate, float for starting y cordinate)
  */
 
 
@@ -9,7 +9,7 @@ package Slime.Games;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import javax.swing.InputMap;
+//import javax.swing.InputMap;
 import javax.swing.JComponent;
 
 
@@ -19,7 +19,7 @@ public class Player_2 extends JComponent{
 	public int dx = 10;
 	public int dy;
 	
-	public InputMap am;
+	//public InputMap am;
 	
 	public Player_2(int x, int y) {
 	Player_2.x = x;
@@ -45,6 +45,12 @@ public class Player_2 extends JComponent{
 	public int getY(){
 		return y;
 	}	
+	public void setX(int n) {
+		x = n;
+	}
+	public void setY(int n) {
+		y = n;
+	}
 	public void moveLeft(){
 		x -= dx;
 	}
