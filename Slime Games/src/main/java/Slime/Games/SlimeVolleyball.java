@@ -101,6 +101,7 @@ public class SlimeVolleyball extends JFrame implements ActionListener,KeyListene
         g.setColor(light_grey);
         
         //volleyball net
+        g.drawLine(598, 500, 598, 600);
         g.drawLine(599, 500, 599, 600);
         g.drawLine(600, 500, 600, 600);
         g.drawLine(601, 500, 601, 600);

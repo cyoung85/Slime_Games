@@ -12,20 +12,24 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.Formatter;
 
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 
-public class SlimeBall extends Component {
+public class SlimeBall extends JComponent {
 	private static float x, y;
 	private static float xSpeed, ySpeed;
 	private static float radius;
 	private static float gravity = 1;
-	public SlimeBall(float x, float y, float radius, float speed, float angleImpact) {
+	private String game;
+	
+	public SlimeBall(float x, float y, float radius, float speed, float angleImpact, String gameType) {
 		 SlimeBall.x = x;
 	     SlimeBall.y = y;
 	     // Convert (speed, angle) to (x, y), with y-axis inverted
 	     SlimeBall.xSpeed = (float)(speed * Math.cos(Math.toRadians(angleImpact)));
 	     SlimeBall.ySpeed = (float)(-speed * (float)Math.sin(Math.toRadians(angleImpact)));
 	     SlimeBall.radius = radius;
+	     game = gameType;
 	}
 	
 	// creates a magenta ball (color just for testing)
@@ -72,6 +76,35 @@ public class SlimeBall extends Component {
 	    	  ySpeed+=gravity;
 	    	  
 	      }
+	    //goal interactions
+	    if (game == "soccer") {
+	    	if(x>0&&x<100&&y<500&&y>475) {
+		    	ySpeed *= -0.95;
+		    }	
+		    if(x>1100&&x<1200&&y<500&&y>475) {
+		    	ySpeed *= -0.95;
+		    }	
+		    if(x<100&&y>500&&y<600) {
+		    	SlimeGames.p2score++;
+		    	x = window.getMaxX()/2 -radius;
+		    	y = 100;
+		    }
+		    if(x>1100&&x<1200&&y>500&&y<600) {
+		    	SlimeGames.p1score++;
+		    	x = window.getMaxX()/2 -radius;
+		    	y = 100;
+		    }
+	    }
+	    else if(game == "basketball") {
+	    	
+	    }
+	    else if(game == "volleyball") {
+	    	
+	    }
+	    else if(game == "spleef") {
+	    	
+	    }
+	    
 	}
 	 // Return the magnitude of speed. 
 	   public float getSpeed() {

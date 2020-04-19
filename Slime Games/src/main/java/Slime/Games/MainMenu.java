@@ -141,7 +141,17 @@ public class MainMenu implements ActionListener {
 			break;
 
 		case "Play Basketball":
-			SlimeBasketball b = new SlimeBasketball();
+			//SlimeBasketball b = new SlimeBasketball();
+			 javax.swing.SwingUtilities.invokeLater(new Runnable() {
+		         public void run() {
+		            JFrame frame = new JFrame("Slime Basketball");
+		            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		            frame.setContentPane(new SlimeBasketball(1200, 700)); 
+		            frame.pack();            // Preferred size of BallWorld
+		            frame.setResizable(false);
+		            frame.setVisible(true);  
+		            }
+		      });
 			break;
 
 		case "Play Volleyball":
