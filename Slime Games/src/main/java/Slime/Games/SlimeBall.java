@@ -21,6 +21,9 @@ public class SlimeBall extends JComponent {
 	private static float radius;
 	private static float gravity;
 	private String game;
+	private boolean sect1=false,sect2=false,sect3=false,sect4= false,sect5 = false,sect6 = false; //used for spleef
+	
+	
 	
 	public SlimeBall(float x, float y, float radius, float speed, float angleImpact, String gameType) {
 		 SlimeBall.x = x;
@@ -80,7 +83,7 @@ public class SlimeBall extends JComponent {
 	         y = ballMinY;
 	         
 	      } else if (y > ballMaxY-100) {
-	    	  	if(game=="volleyball"&&x<600) {
+	    	  	if(game=="volleyball"&&x<600) {//volleyball scoring
 	    	  		SlimeGames.p2score++;
 	    	  		x = window.getMaxX()/2 -radius;
 			    	y = 100;
@@ -88,7 +91,54 @@ public class SlimeBall extends JComponent {
 	    	  		SlimeGames.p1score++;
 	    	  		x = window.getMaxX()/2 -radius;
 			    	y = 100;
+	    	  	} else if(game=="spleef"&&x<600) { //spleef scoring
+	    	  		if (sect1&& x<200) {
+	    	  			SlimeGames.p2score++;
+		    	  		x = window.getMaxX()/2 -radius;
+				    	y = 100;
+	    	  		} else if(x<200) {
+	    	  			sect1 = true;
+	    	  		}
+	    	  		else if (sect2&& x>=200&&x<400) {
+	    	  			SlimeGames.p2score++;
+		    	  		x = window.getMaxX()/2 -radius;
+				    	y = 100;
+	    	  		} else if(x>=200&&x<400) {
+	    	  			sect2 = true;
+	    	  		}
+	    	  		else if (sect3&&x>=400&&x<600) {
+	    	  			SlimeGames.p2score++;
+		    	  		x = window.getMaxX()/2 -radius;
+				    	y = 100;
+	    	  		} else if(x>=400&&x<600) {
+	    	  			sect3 = true;
+	    	  		}
+	    	  		
+	    	  	} else if(game=="spleef"&&x>600) {
+	    	  		if (sect4&& x>=600&&x<800) {
+	    	  			SlimeGames.p1score++;
+		    	  		x = window.getMaxX()/2 -radius;
+				    	y = 100;
+	    	  		} else if(x>=600&&x<800) {
+	    	  			sect4 = true;
+	    	  		}
+	    	  		if (sect5&& x>=800&&x<1000) {
+	    	  			SlimeGames.p1score++;
+		    	  		x = window.getMaxX()/2 -radius;
+				    	y = 100;
+	    	  		} else if(x>=800&&x<1000) {
+	    	  			sect5 = true;
+	    	  		}
+	    	  		if (sect6&&x>=1000) {
+	    	  			SlimeGames.p1score++;
+		    	  		x = window.getMaxX()/2 -radius;
+				    	y = 100;
+	    	  		} else if(x>=1000) {
+	    	  			sect6 = true;
+	    	  		}
+	    	  		
 	    	  	}
+	    	  	
 	    	  	else {
 	    	  		ySpeed *= -0.85;//friction;
 	    	  		y = ballMaxY-100;

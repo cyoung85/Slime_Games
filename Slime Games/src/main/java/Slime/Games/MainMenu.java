@@ -170,8 +170,17 @@ public class MainMenu implements ActionListener {
 			break;
 
 		case "Play Spleef":
-			SlimeSpleef p = new SlimeSpleef();
-			
+			//SlimeSpleef p = new SlimeSpleef();
+			javax.swing.SwingUtilities.invokeLater(new Runnable() {
+		         public void run() {
+		            JFrame frame = new JFrame("Slime Spleef");
+		            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		            frame.setContentPane(new SlimeSpleef(1190, 690)); 
+		            frame.pack();            // Preferred size of BallWorld
+		            frame.setResizable(false);
+		            frame.setVisible(true);  
+		            }
+		      });
 		default:
 			break;
 		}

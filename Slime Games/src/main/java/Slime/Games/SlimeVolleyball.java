@@ -5,7 +5,6 @@ import java.awt.event.*;
 import java.util.Random;
 import javax.swing.*;
 
-import Slime.Games.SlimeBasketball.DrawCanvas;
 
 /**
  * The control logic and main display panel for game.

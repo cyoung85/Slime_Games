@@ -6,9 +6,10 @@ import java.awt.event.*;
 import java.util.Random;
 import javax.swing.*;
 
-import Slime.Games.SlimeSoccer.DrawCanvas;
 
-
+/**
+ * The control logic and main display panel for game.
+ */
 public class SlimeBasketball extends JPanel {
 	private static final int UPDATE_RATE = 60; // Frames per second (fps)
 
