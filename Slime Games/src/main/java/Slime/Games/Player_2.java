@@ -17,7 +17,8 @@ public class Player_2 extends JComponent{
 	private static int x;
 	private static int y;
 	public int dx = 10;
-	public int dy;
+	public int dy = 10;
+	private boolean touchedground = true;
 	
 	//public InputMap am;
 	
@@ -51,13 +52,41 @@ public class Player_2 extends JComponent{
 	public void setY(int n) {
 		y = n;
 	}
+	
 	public void moveLeft(){
+		if(x <=0)
+			return;
 		x -= dx;
 	}
 	
 	public void moveRight() {
+		if (x >=1100)
+			return;
 		x += dx;
 	}
-	
+	public void jump(boolean jumping) {
+		if(y>=400 && touchedground) {
+			y -= dy;
+		}
+		else{
+			jumping = false;
+			touchedground = false;
+		}
+	}
+	public void inAir() {
+		touchedground = false;
+	}
+
+	public boolean canJump(){
+		if(touchedground)
+			return true;
+		return false;
+	}
+	public void touchedGround() {
+		touchedground = true;
+	}
+	public void applyGravity() {
+		y += dy;
+	}
 }
 

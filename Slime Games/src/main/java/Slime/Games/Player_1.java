@@ -14,10 +14,12 @@ import javax.swing.JComponent;
 
 @SuppressWarnings("serial")
 public class Player_1 extends JComponent {
-	private static int x;
-	private static int y;
+	public static int x;
+	public static int y;
 	public int dx = 10;
-	public int dy;
+	public int dy = 10;
+	private boolean touchedground = true;
+	//public boolean moving = false;
 
 	
 	public Player_1(int x, int y) {
@@ -52,11 +54,46 @@ public class Player_1 extends JComponent {
 	}
 	
 	public void moveLeft(){
+		if(x <=0)
+			return;
 		x -= dx;
 	}
 	
 	public void moveRight() {
+		if (x >=1100)
+			return;
 		x += dx;
+		
 	}
-	
+	public void jump(boolean jumping) {
+		if(y>=400 && touchedground) {
+			y -= dy;
+		}
+		else{
+			jumping = false;
+			touchedground = false;
+		}
+	}
+	public void inAir() {
+		touchedground = false;
+	}
+
+	public boolean canJump(){
+		if(touchedground)
+			return true;
+		return false;
+	}
+	public void touchedGround() {
+		touchedground = true;
+	}
+	public void applyGravity() {
+		y += dy;
+	}
+	/*
+	public boolean isMoving() {
+		if(moving)
+			return true;
+		return false;
+	}
+	*/
 }

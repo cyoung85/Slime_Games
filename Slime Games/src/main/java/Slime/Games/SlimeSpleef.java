@@ -1,369 +1,330 @@
 package Slime.Games;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
+import java.awt.event.*;
+import java.util.Random;
 import javax.swing.*;
 
-//import testPaint.testPaint;
-public class SlimeSpleef extends JFrame implements ActionListener,KeyListener{
-	public final int ballxStart = 580; //ball x start position
-	public final int ballyStart = 200; //ball y start position
-	public int ballx = ballxStart; //ball x current position
-	public int bally = ballyStart; //ball y current position
-	public int balldx = 0;
-	public int balldy = 0;
-	public final int leftxStart = 150; //left slime x start position
-	public final int leftyStart = 550; //left slime y start position 
-	public final int rightxStart = 950; //right slime x start position
-	public final int rightyStart = 550; //right slime y start position
-	public int leftx = leftxStart; //left slime x current position
-	public int lefty = leftyStart; //left slime y current position
-	public int rightx = rightxStart; //right slime x current position
-	public int righty = rightyStart; //right slime y current position
-	public int leftdx=0; //left slime x direction change
-	public int leftdy=0; //left slime y direction change
-	public int rightdx=0; //right slime x direction change
-	public int rightdy=0; //right slime y direction change
-	public boolean lCanJump = true;
-	public boolean rCanJump = true;
-	public boolean lFalling = false;
-	public boolean rFalling = false;
-	public final int gravity = 1;
-	
-	
-	
-	private double defaultRoundTime = 60; //default time for each game
-	private double roundTime = defaultRoundTime; //current remaining time
-	private static Timer timer;
-	public static final int TIMER_SPEED = 12;
-	
+import Slime.Games.SlimeVolleyball.DrawCanvas;
+
+
+/**
+ * The control logic and main display panel for game.
+ */
+public class SlimeSpleef extends JPanel{
+	private static final int UPDATE_RATE = 60; // Frames per second (fps)
+
+	private SlimeBall ball; // A single bouncing SlimeBall instance
+	private WindowBounds window; // The container rectangular box
+	private Player_1 p1; // Player 1's variable
+	private Player_2 p2;
+
+	private boolean p1Left = false;
+	private boolean p1Right = false;
+	private boolean p1Jump = false;
+	private boolean p2Left = false;
+	private boolean p2Right = false;
+	private boolean p2Jump = false;
+
+	private DrawCanvas canvas; // Custom canvas for drawing the box/SlimeBall
+	private int canvasWidth;
+	private int canvasHeight;
+	//private String game = "soccer";
+	// the starting location for the ball
+	public final int ballxStart = 580;
+	public final int ballyStart = 200;
+	public int ballx = ballxStart;
+	public int bally = ballyStart;
+
+	// start for player 1
+	public final int p1XStart = 150;
+	public final int p1YStart = 550;
+
+	// start for player 2
+	public final int p2XStart = 950;
+	public final int p2YStart = 550;
+
+	private boolean sect1=true,sect2=true,sect3=true,sect4= true,sect5 = true,sect6 = true; //used for spleef
+
+	@SuppressWarnings("exports")
+	public InputMap im;
+	@SuppressWarnings("exports")
+	public ActionMap ap;
+
+
 	//Frame Declarations
-	SlimeSpleef(){
-        setSize(1200, 700);
-        setTitle("Slime Spleef");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setVisible(true);
-        setResizable(false);
-        
-        timer = new Timer(12, this);
-        timer.start();
-        addKeyListener(this);
-		setFocusable(true);
-		setFocusTraversalKeysEnabled(false);
-        
-    }
+	public SlimeSpleef(int width, int height){
+		canvasWidth = width;
+		canvasHeight = height;
 
-    public static void main(String[] args) {
-         SlimeSpleef m = new SlimeSpleef();
-         m.repaint(); 
-    } 
+		Random rand = new Random();
+		int radius = 20;
+		int speed = 10;
+		int angleInDegree = rand.nextInt(360);
+		ball = new SlimeBall(ballx, bally, radius, speed, angleInDegree,"spleef");
 
-    //@Override
-    public void paint(Graphics g) 
-    {
-    	
-    	Color light_blue = new Color(51,153,255);
-    	g.setColor(light_blue);
-        g.fillRect(0, 0,1200, 700 );
-        
-        Color dark_green = new Color(0,153,0); //used for the not hit spaces
-        Color dark_red = new Color(204,0,0); // used for the hit spaces
-        Color light_green = new Color(0,255,100);
-        Color white = new Color(255,255,255);
-        Color light_grey = new Color(204,204,204);
-        
-        
-        g.setColor(Color.white);
-    	g.fillOval(ballx, bally, 40, 40);
-    	
-    	//left slime
-        Color black = new Color(0,0,0);
-        
-        Color red = new Color(255,0,0);
-        g.setColor(red);
-        g.fillArc(leftx, lefty, 100, 100, 0, 180);
-        g.setColor(white);
-        g.fillOval(leftx+65, lefty+10, 15, 15);
-        g.setColor(black);
-        g.fillOval(leftx+70, lefty+10, 10, 10);
-        //right slime
-        Color yellow = new Color(255,255,0);
-        g.setColor(yellow);
-        g.fillArc(rightx, righty, 100, 100, 0, 180);
-        g.setColor(white);
-        g.fillOval(rightx+35, righty+10, 15, 15);
-        g.setColor(black);
-        g.fillOval(rightx+35, righty+10, 10, 10);
-        
-        //left 3 sections for spleef 
-        g.setColor(dark_green); // default set to normal grass color
-        g.fillRect(0, 600,199, 100 ); //left side left section
-        //g.setColor(dark_red); 
-        g.fillRect(200, 600,399, 100 ); //left side middle section
-        g.setColor(dark_green);
-        g.fillRect(400, 600,599, 100 ); //left side right section
-        
-        //right 3 sections for spleef
-        //g.setColor(dark_red); 
-        g.fillRect(600, 600,799, 100 ); //right side left section
-        g.setColor(dark_green);
-        g.fillRect(800, 600,999, 100 ); //right side middle section
-        //g.setColor(dark_red); 
-        g.fillRect(1000, 600,1200, 100 ); //right side right section
-        
-        g.setColor(light_green);
-        //middle divider on ground
-        g.drawLine(599, 600, 599, 700);
-        g.drawLine(600, 600, 600, 700);
-        
-        g.setColor(white);
-        //left side section dividers
-        g.drawLine(199, 600, 199, 700);
-        g.drawLine(200, 600, 200, 700);
-        g.drawLine(399, 600, 399, 700);
-        g.drawLine(400, 600, 400, 700);
+		// Init the Container Box to fill the screen
+		window = new WindowBounds(canvasWidth, canvasHeight,"spleef");
 
-        //right side section dividers
-        g.drawLine(799, 600, 799, 700);
-        g.drawLine(800, 600, 800, 700);
-        g.drawLine(999, 600, 999, 700);
-        g.drawLine(1000, 600, 1000, 700);
+		// Init Player 1
+		p1 = new Player_1(p1XStart, p1YStart);
+		p2 = new Player_2(p2XStart, p2YStart);
+		// Init the custom drawing panel for drawing the game
+		canvas = new DrawCanvas();
 
-        
-        g.setColor(light_grey);
-        //volleyball net
-        g.drawLine(598, 500, 598, 600);
-        g.drawLine(599, 500, 599, 600);
-        g.drawLine(600, 500, 600, 600);
-        g.drawLine(601, 500, 601, 600);
-        
-        //displays the scores
-        g.setColor(Color.WHITE);
-		g.setFont(new Font("Helvetica",Font.BOLD,40));
-		g.drawString("" + SlimeGames.p1score, 50, 100);
-		g.drawString("" + SlimeGames.p2score, 1200 - 80, 100);
-        
-		//displays the time
-        g.setColor(Color.YELLOW);
-        g.setFont(new Font("Helvetica",Font.BOLD,40));
-		g.drawString("" + Math.round(roundTime), 1200/2 - 20, 80);
-    }   
-	
-	
-    public void actionPerformed(ActionEvent e) {
-		SlimeGames.resetScore();
-		move();
-		falling();
-		/*
-		 * timer
-		 * it counts down the time and when there is no time it checks the score for a winner or tie
-		 * it also prompts if you want to play again
-		 */
-		if ( roundTime > 0 ) {
-			
-			roundTime -= TIMER_SPEED * .001;
-			repaint();
-		} else {
-			timer.stop();
-			int winner = 0;
-			if (SlimeGames.p1score > SlimeGames.p2score) {
-				winner = 1;
-			} else if (SlimeGames.p2score > SlimeGames.p1score){
-				winner = 2;
+		this.setLayout(new BorderLayout());
+		this.add(canvas, BorderLayout.CENTER);
+
+		im = canvas.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+
+		//set up for p1 to move
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0, false), "A Down");
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0, true), "A Released");
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0, false), "D Down");
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0, true), "D Released");
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0, false), "W Down");
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0, true), "W Released");
+
+		//set up for p2 to move 
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0, false), "Left Down");
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0, true), "Left Released");
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0, false), "Right Down");
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0, true), "Right Released");
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, false), "Up Down");
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, true), "Up Released");
+
+		ap = canvas.getActionMap();
+
+		// make player 1 move the desired direction
+		//p1 left
+		ap.put("A Down", new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent e) {
+				p1Left = true;
 			}
-			String notification;
-			if (winner == 0) {
-				notification = "Tie! Play again?";
-			} else {
-				notification = "Player " + winner + " won. Play again?";
+		});
+
+		ap.put("A Released", new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent e) {
+				p1Left = false;
 			}
-			int input = JOptionPane.showOptionDialog( new JFrame(), notification, "Game Over", JOptionPane.YES_NO_OPTION,
-					                      JOptionPane.PLAIN_MESSAGE, null, null, null);
-			if (input == JOptionPane.YES_OPTION){//resetting the timer, players, and ball when played again
-				roundTime = defaultRoundTime;
-				leftx = leftxStart;
-				lefty = leftyStart;
-				rightx = rightxStart;
-				righty = rightyStart;
-				bally = ballyStart;
-				leftdx= 0;
-				leftdy= 0;
-				leftdx= 0;
-				rightdx= 0;
-				rightdy= 0;
-				timer.start();
-			} else { //closes the program when not playing again
-				System.exit(0);
+		});
+
+		//p1 right
+		ap.put("D Down", new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent e) {
+				p1Right = true;
 			}
-		}
-		
+		});
+		ap.put("D Released", new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent e) {
+				p1Right = false;
+			}
+		});
+		// p1 jump
+				ap.put("W Down", new AbstractAction() {
+					private static final long serialVersionUID = 1L;
+
+					public void actionPerformed(ActionEvent e) {
+						p1Jump = true;
+					}
+				});
+				ap.put("W Released", new AbstractAction() {
+					private static final long serialVersionUID = 1L;
+
+					public void actionPerformed(ActionEvent e) {
+						p1Jump = false;
+					}
+				});
+		//p2 left
+		ap.put("Left Down", new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent e) {
+				p2Left = true;
+			}
+		});
+		ap.put("Left Released", new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent e) {
+				p2Left = false;
+			}
+		});
+
+		//p2 right
+		ap.put("Right Down", new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent e) {
+				p2Right = true;
+			}
+		});
+		ap.put("Right Released", new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent e) {
+				p2Right = false;
+			}
+		});
+		// p2 jump
+				ap.put("Up Down", new AbstractAction() {
+					private static final long serialVersionUID = 1L;
+
+					public void actionPerformed(ActionEvent e) {
+						p2Jump = true;
+					}
+				});
+				ap.put("Up Released", new AbstractAction() {
+					private static final long serialVersionUID = 1L;
+
+					public void actionPerformed(ActionEvent e) {
+						p2Jump = false;
+					}
+				});
+		// Handling window resize.
+		this.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				Component c = (Component) e.getSource();
+				Dimension dim = c.getSize();
+				canvasWidth = dim.width;
+				canvasHeight = dim.height;
+				// Adjust the bounds of the container to fill the window
+				window.set(0, 0, canvasWidth, canvasHeight);
+			}
+		});
+
+		// Start the SlimeBall bouncing
+		gameStart();
+
 	}
-    public void move() {
-    	/*
-         * checking to see if the player can jump or if they are falling
-         */
-    	if(lefty==550) {
-        	lCanJump= true;
-        	lFalling = false;
-        }
-        else {
-        	
-        	lCanJump = false;
-        }
-        if(righty==550) {
-        	rCanJump= true;
-        	rFalling = false;
-        }
-        else {
-        	
-        	rCanJump = false;
-        }
-        /*
-		 * checking boundaries for the two players and resetting when out of the boundary
-		 * also makes sure the players stay on their half without crossing the middle
-		 */
-        if(leftx<0) {
-        	leftx=0;
-        }
-        if(rightx<600) {
-        	rightx = 600;
-        }
-        
-        if(righty<0) {
-        	righty = 0;
-        }
-        if(lefty<0) {
-        	lefty = 0;
-        }
-        if(leftx>500) {
-        	leftx=500;
-        }
-        if(rightx>1100) {
-        	rightx = 1100;
-        }
-        /*
-         * checking the lower boundary for the ground for the players
-         */
-        if(righty>550) {
-        	righty = 550;
-        	rCanJump = true;
-        	
-        	rightdy = 0;
-        }
-        else {
-        	rCanJump = false;
-        }
-        if(lefty>550) {
-        	lefty = 550;
-        	lCanJump = true;
-        	
-        	leftdy = 0;
-        }
-        else {
-        	lCanJump = false;
-        }
-        /*
-         * checking the lower boundary for the ball and having it bounce back
-         */
-        if(bally>560) {
-        	bally = 560;
-        	balldy *= -.95;
-        	
-        }
-       
-		leftx += leftdx;
-        lefty += leftdy;
-        rightx += rightdx;
-        righty += rightdy;
-        bally+=balldy;
-        
-    }
-    /*
-	 * code for gravity for the players and ball
-	 */
-	public void falling() {
-		if(lefty<550) {
-			leftdy+=gravity;
-		}
-		if(righty<550) {
-			rightdy+=gravity;
-		}
-		if(bally<560) {
-			balldy+=gravity;
-		}
+	public void gameStart() {
+		// Run the game logic in its own thread.
+		Thread gameThread = new Thread() {
+			public void run() {
+				while (true) {
+					// Execute one time-step for the game
+					gameUpdate();
+					// Refresh the display
+					repaint();
+					// Delay and give other thread a chance
+
+					try {
+						Thread.sleep(1000 / UPDATE_RATE);
+					} catch (InterruptedException ex) {
+					}
+				}
+			}
+		};
+		gameThread.start(); // Invoke GaemThread.run()
 	}
-	
-	/*
-	 * code to move the two players in the corresponding direction that was pressed
+	/**
+	 * One game time-step. Update the game objects, with proper collision detection
+	 * and response.
 	 */
-	@Override
-	public void keyPressed(KeyEvent e) {
-		
-		int key = e.getKeyCode();
-		
-		if(key == KeyEvent.VK_A) {
-			leftdx= -5;
+	public void gameUpdate() {
+		ball.moveWithColision(window, p1,p2);
+		if(p1Left)
+			p1.moveLeft();
+		if(p1Right)
+			p1.moveRight();
+		if (p1.getY() < 550 && !p1.canJump()) {
+			p1.inAir();
+			p1.applyGravity();
 		}
-		if(key == KeyEvent.VK_W && lefty == 550) {
-			
-			leftdy= -20;
-			lFalling = true;
-			lCanJump = false;
+		if (p1Jump)
+			p1.jump(p1Jump);
+		else
+			p1.inAir();
+		if(p2Left)
+			p2.moveLeft();
+		if(p2Right)
+			p2.moveRight();
+		if (p2.getY() < 550 && !p2.canJump()) {
+			p2.inAir();
+			p2.applyGravity();
 		}
-		if(key == KeyEvent.VK_D) {
-			leftdx= 5;
-		}
-		if(key == KeyEvent.VK_LEFT) {
-			rightdx= -5;
-		}
-		if(key == KeyEvent.VK_UP && righty == 550) {
-			rightdy= -20;
-			rFalling = true;
-			rCanJump = false;
-		}
-		if(key == KeyEvent.VK_RIGHT) {
-			rightdx= 5;
-		}
-		
+		if (p2Jump)
+			p2.jump(p2Jump);
+		else
+			p2.inAir();
+
+		if (p1.getY() == 550)
+			p1.touchedGround();
+		if (p2.getY() == 550)
+			p2.touchedGround();
 	}
 
-	
-	/*
-	 * code to reset the movement to 0 for the two players when the key is released
-	 */
-	@Override
-	public void keyReleased(KeyEvent e) {
-		
-		int key = e.getKeyCode();
-		if(key == KeyEvent.VK_A) {
-			leftdx= 0;
-		}
-		if(key == KeyEvent.VK_W) {
-			leftdy= 0;
-		}
-		if(key == KeyEvent.VK_D) {
-			leftdx= 0;
-		}
-		if(key == KeyEvent.VK_LEFT) {
-			rightdx= 0;
-		}
-		if(key == KeyEvent.VK_UP) {
-			rightdy= 0;
-		}
-		if(key == KeyEvent.VK_RIGHT) {
-			rightdx= 0;
-		}
-		
-	}
+	// makes sure the window loads in properly
 
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
+	public Dimension getPreferredSize() {
+		return (new Dimension(canvasWidth, canvasHeight));
 	}
-	
+	/** The custom drawing panel for the bouncing SlimeBall (inner class). */
+	class DrawCanvas extends JPanel {
+		private static final long serialVersionUID = 1L;
+		/** Custom drawing codes */
+		@Override
+		public void paintComponent(Graphics g) {
+
+			// Draw the box and the SlimeBall
+			window.draw(g);
+			ball.draw(g);
+			p1.draw(g);
+			p2.draw(g);
+			Color light_green = new Color(0,255,100);
+			Color white = new Color(255,255,255);
+			Color dark_red = new Color(204,0,0); // used for the hit spaces
+			g.setColor(dark_red);
+			if(ball.sect1&&sect1) {
+				g.fillRect(0, 600,199, 100 ); //left side left section
+			}
+				
+			if(ball.sect2&&sect2) {
+				g.fillRect(200, 600,399, 100 ); //left side middle section
+			}
+				
+			if(ball.sect3&&sect3) {
+				g.fillRect(400, 600,599, 100 ); //left side right section
+			}
+				
+			if(ball.sect4&&sect4) {
+				g.fillRect(600, 600,799, 100 ); //right side left section
+			}
+				
+			if(ball.sect5&&sect5) {
+				g.fillRect(800, 600,999, 100 ); //right side middle section
+			}
+				
+			if(ball.sect6&&sect6) {
+				g.fillRect(1000, 600,1200, 100 ); //right side right section
+			}
+				
+			g.setColor(light_green);
+			//middle divider on ground
+			g.drawLine(599, 600, 599, 700);
+			g.drawLine(600, 600, 600, 700);
+
+			g.setColor(white);
+			//left side section dividers
+			g.drawLine(199, 600, 199, 700);
+			g.drawLine(200, 600, 200, 700);
+			g.drawLine(399, 600, 399, 700);
+			g.drawLine(400, 600, 400, 700);
+
+			//right side section dividers
+			g.drawLine(799, 600, 799, 700);
+			g.drawLine(800, 600, 800, 700);
+			g.drawLine(999, 600, 999, 700);
+			g.drawLine(1000, 600, 1000, 700);
+			//displays the scores
+			g.setColor(Color.WHITE);
+			g.setFont(new Font("Helvetica",Font.BOLD,40));
+			g.drawString("" + SlimeGames.p1score, 50, 100);
+			g.drawString("" + SlimeGames.p2score, 1200 - 80, 100);
+
+
+		}   
+
+	}
 }
