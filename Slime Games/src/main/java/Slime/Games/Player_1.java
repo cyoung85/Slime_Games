@@ -16,8 +16,9 @@ import javax.swing.JComponent;
 public class Player_1 extends JComponent {
 	private static int x;
 	private static int y;
-	public int dx = 4;
-	public int dy;
+	public int dx = 10;
+	public int dy = 10;
+	private boolean touchedground = true;
 
 	
 	public Player_1(int x, int y) {
@@ -44,14 +45,46 @@ public class Player_1 extends JComponent {
 	public int getY(){
 		return y;
 	}	
+	public void setX(int n) {
+		x = n;
+	}
+	public void setY(int n) {
+		y = n;
+	}
 	
 	public void moveLeft(){
+		if(x <=0)
+			return;
 		x -= dx;
 	}
 	
 	public void moveRight() {
+		if (x >=1100)
+			return;
 		x += dx;
 	}
-	
-}
+	public void jump(boolean jumping) {
+		if(y>=400 && touchedground) {
+			y -= dy;
+		}
+		else{
+			jumping = false;
+			touchedground = false;
+		}
+	}
+	public void inAir() {
+		touchedground = false;
+	}
 
+	public boolean canJump(){
+		if(touchedground)
+			return true;
+		return false;
+	}
+	public void touchedGround() {
+		touchedground = true;
+	}
+	public void applyGravity() {
+		y += dy;
+	}
+}
