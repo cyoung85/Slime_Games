@@ -194,7 +194,7 @@ public class SlimeBall extends JComponent {
 					ySpeed = 0;
 					sect4 = true;
 				}
-				if (sect5&& x>=800&&x<1000) {
+				else if (sect5&& x>=800&&x<1000) {
 					SlimeGames.p1score++;
 					x = 1000;//window.getMaxX()/2 -radius;
 					y = 100;
@@ -215,7 +215,7 @@ public class SlimeBall extends JComponent {
 					ySpeed = 0;
 					sect5 = true;
 				}
-				if (sect6&&x>=1000) {
+				else if (sect6&&x>=1000) {
 					SlimeGames.p1score++;
 					x = 1000;//window.getMaxX()/2 -radius;
 					y = 100;
@@ -318,6 +318,7 @@ public class SlimeBall extends JComponent {
 				xSpeed *= -1;
 			}
 		}
+		//the middle boundary of limiting slimes
 		else if(game == "volleyball") {
 			if(p1X>500) p1.setX(500);
 			if(p2X<600) p2.setX(600);

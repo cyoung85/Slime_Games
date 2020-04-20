@@ -281,23 +281,23 @@ public class SlimeSpleef extends JPanel{
 			}
 				
 			if(ball.sect2&&sect2) {
-				g.fillRect(200, 600,399, 100 ); //left side middle section
+				g.fillRect(200, 600,199, 100 ); //left side middle section
 			}
 				
 			if(ball.sect3&&sect3) {
-				g.fillRect(400, 600,599, 100 ); //left side right section
+				g.fillRect(400, 600,199, 100 ); //left side right section
 			}
 				
 			if(ball.sect4&&sect4) {
-				g.fillRect(600, 600,799, 100 ); //right side left section
+				g.fillRect(600, 600,199, 100 ); //right side left section
 			}
 				
 			if(ball.sect5&&sect5) {
-				g.fillRect(800, 600,999, 100 ); //right side middle section
+				g.fillRect(800, 600,199, 100 ); //right side middle section
 			}
 				
 			if(ball.sect6&&sect6) {
-				g.fillRect(1000, 600,1200, 100 ); //right side right section
+				g.fillRect(1000, 600,199, 100 ); //right side right section
 			}
 				
 			g.setColor(light_green);
