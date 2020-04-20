@@ -131,7 +131,7 @@ public class MainMenu implements ActionListener {
 			         public void run() {
 			            JFrame frame = new JFrame("Slime Soccer");
 			            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			            frame.setContentPane(new SlimeSoccer(1200, 700)); 
+			            frame.setContentPane(new SlimeSoccer(1190, 690)); 
 			            frame.pack();            // Preferred size of BallWorld
 			            frame.setResizable(false);
 			            frame.setVisible(true);  
@@ -146,7 +146,7 @@ public class MainMenu implements ActionListener {
 		         public void run() {
 		            JFrame frame = new JFrame("Slime Basketball");
 		            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		            frame.setContentPane(new SlimeBasketball(1200, 700)); 
+		            frame.setContentPane(new SlimeBasketball(1190, 690)); 
 		            frame.pack();            // Preferred size of BallWorld
 		            frame.setResizable(false);
 		            frame.setVisible(true);  
@@ -155,7 +155,18 @@ public class MainMenu implements ActionListener {
 			break;
 
 		case "Play Volleyball":
-			SlimeVolleyball v = new SlimeVolleyball();
+			//SlimeVolleyball v = new SlimeVolleyball();
+			javax.swing.SwingUtilities.invokeLater(new Runnable() {
+		         public void run() {
+		            JFrame frame = new JFrame("Slime Volleyball");
+		            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		            frame.setContentPane(new SlimeVolleyball(1190, 690)); 
+		            frame.pack();            // Preferred size of BallWorld
+		            frame.setResizable(false);
+		            frame.setVisible(true);  
+		            }
+		      });
+		
 			break;
 
 		case "Play Spleef":

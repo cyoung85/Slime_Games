@@ -59,6 +59,9 @@ public class SlimeBall extends JComponent {
 	    int p1X = p1.getX();
 	    int p1Y = p1.getY();
 	    
+	    int p2X = p2.getX();
+	    int p2Y = p2.getY();
+	    
 	    // gets the new position for the ball after each frame
 	    x += xSpeed;
 	    y += ySpeed;
