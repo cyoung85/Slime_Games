@@ -20,8 +20,10 @@ public class SlimeSoccer extends JPanel {
 
 	private boolean p1Left = false;
 	private boolean p1Right = false;
+	private boolean p1Jump = false;
 	private boolean p2Left = false;
 	private boolean p2Right = false;
+	private boolean p2Jump = false;
 
 	private DrawCanvas canvas; // Custom canvas for drawing the box/SlimeBall
 	private int canvasWidth;
@@ -76,12 +78,16 @@ public class SlimeSoccer extends JPanel {
 		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0, true), "A Released");
 		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0, false), "D Down");
 		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0, true), "D Released");
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0, false), "W Down");
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0, true), "W Released");
 
 		//set up for p2 to move 
 		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0, false), "Left Down");
 		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0, true), "Left Released");
 		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0, false), "Right Down");
 		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0, true), "Right Released");
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, false), "Up Down");
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, true), "Up Released");
 
 		ap = canvas.getActionMap();
 
@@ -115,6 +121,21 @@ public class SlimeSoccer extends JPanel {
 				p1Right = false;
 			}
 		});
+		// p1 jump
+		ap.put("W Down", new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+
+			public void actionPerformed(ActionEvent e) {
+				p1Jump = true;
+			}
+		});
+		ap.put("W Released", new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+
+			public void actionPerformed(ActionEvent e) {
+				p1Jump = false;
+			}
+		});
 
 		//p2 left
 		ap.put("Left Down", new AbstractAction() {
@@ -141,6 +162,21 @@ public class SlimeSoccer extends JPanel {
 			private static final long serialVersionUID = 1L;
 			public void actionPerformed(ActionEvent e) {
 				p2Right = false;
+			}
+		});
+		// p2 jump
+		ap.put("Up Down", new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+
+			public void actionPerformed(ActionEvent e) {
+				p2Jump = true;
+			}
+		});
+		ap.put("Up Released", new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+
+			public void actionPerformed(ActionEvent e) {
+				p2Jump = false;
 			}
 		});
 		// Handling window resize.
@@ -192,10 +228,31 @@ public class SlimeSoccer extends JPanel {
 			p1.moveLeft();
 		if(p1Right)
 			p1.moveRight();
+		if (p1.getY() < 550 && !p1.canJump()) {
+			p1.inAir();
+			p1.applyGravity();
+		}
+		if (p1Jump)
+			p1.jump(p1Jump);
+		else
+			p1.inAir();
 		if(p2Left)
 			p2.moveLeft();
 		if(p2Right)
 			p2.moveRight();
+		if (p2.getY() < 550 && !p2.canJump()) {
+			p2.inAir();
+			p2.applyGravity();
+		}
+		if (p2Jump)
+			p2.jump(p2Jump);
+		else
+			p2.inAir();
+
+		if (p1.getY() == 550)
+			p1.touchedGround();
+		if (p2.getY() == 550)
+			p2.touchedGround();
 	}
 
 	// makes sure the window loads in properly
@@ -210,7 +267,7 @@ public class SlimeSoccer extends JPanel {
 		/** Custom drawing codes */
 		@Override
 		public void paintComponent(Graphics g) {
-			
+
 			// Draw the box and the SlimeBall
 			window.draw(g);
 			ball.draw(g);

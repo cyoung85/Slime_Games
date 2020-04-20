@@ -21,8 +21,10 @@ public class SlimeSpleef extends JPanel{
 
 	private boolean p1Left = false;
 	private boolean p1Right = false;
+	private boolean p1Jump = false;
 	private boolean p2Left = false;
 	private boolean p2Right = false;
+	private boolean p2Jump = false;
 
 	private DrawCanvas canvas; // Custom canvas for drawing the box/SlimeBall
 	private int canvasWidth;
@@ -41,6 +43,8 @@ public class SlimeSpleef extends JPanel{
 	// start for player 2
 	public final int p2XStart = 950;
 	public final int p2YStart = 550;
+
+	private boolean sect1=true,sect2=true,sect3=true,sect4= true,sect5 = true,sect6 = true; //used for spleef
 
 	@SuppressWarnings("exports")
 	public InputMap im;
@@ -78,12 +82,16 @@ public class SlimeSpleef extends JPanel{
 		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0, true), "A Released");
 		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0, false), "D Down");
 		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0, true), "D Released");
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0, false), "W Down");
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0, true), "W Released");
 
 		//set up for p2 to move 
 		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0, false), "Left Down");
 		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0, true), "Left Released");
 		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0, false), "Right Down");
 		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0, true), "Right Released");
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, false), "Up Down");
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, true), "Up Released");
 
 		ap = canvas.getActionMap();
 
@@ -116,7 +124,21 @@ public class SlimeSpleef extends JPanel{
 				p1Right = false;
 			}
 		});
+		// p1 jump
+				ap.put("W Down", new AbstractAction() {
+					private static final long serialVersionUID = 1L;
 
+					public void actionPerformed(ActionEvent e) {
+						p1Jump = true;
+					}
+				});
+				ap.put("W Released", new AbstractAction() {
+					private static final long serialVersionUID = 1L;
+
+					public void actionPerformed(ActionEvent e) {
+						p1Jump = false;
+					}
+				});
 		//p2 left
 		ap.put("Left Down", new AbstractAction() {
 			private static final long serialVersionUID = 1L;
@@ -144,7 +166,21 @@ public class SlimeSpleef extends JPanel{
 				p2Right = false;
 			}
 		});
+		// p2 jump
+				ap.put("Up Down", new AbstractAction() {
+					private static final long serialVersionUID = 1L;
 
+					public void actionPerformed(ActionEvent e) {
+						p2Jump = true;
+					}
+				});
+				ap.put("Up Released", new AbstractAction() {
+					private static final long serialVersionUID = 1L;
+
+					public void actionPerformed(ActionEvent e) {
+						p2Jump = false;
+					}
+				});
 		// Handling window resize.
 		this.addComponentListener(new ComponentAdapter() {
 			@Override
@@ -192,10 +228,31 @@ public class SlimeSpleef extends JPanel{
 			p1.moveLeft();
 		if(p1Right)
 			p1.moveRight();
+		if (p1.getY() < 550 && !p1.canJump()) {
+			p1.inAir();
+			p1.applyGravity();
+		}
+		if (p1Jump)
+			p1.jump(p1Jump);
+		else
+			p1.inAir();
 		if(p2Left)
 			p2.moveLeft();
 		if(p2Right)
 			p2.moveRight();
+		if (p2.getY() < 550 && !p2.canJump()) {
+			p2.inAir();
+			p2.applyGravity();
+		}
+		if (p2Jump)
+			p2.jump(p2Jump);
+		else
+			p2.inAir();
+
+		if (p1.getY() == 550)
+			p1.touchedGround();
+		if (p2.getY() == 550)
+			p2.touchedGround();
 	}
 
 	// makes sure the window loads in properly
@@ -215,9 +272,51 @@ public class SlimeSpleef extends JPanel{
 			ball.draw(g);
 			p1.draw(g);
 			p2.draw(g);
+			Color light_green = new Color(0,255,100);
+			Color white = new Color(255,255,255);
+			Color dark_red = new Color(204,0,0); // used for the hit spaces
+			g.setColor(dark_red);
+			if(ball.sect1&&sect1) {
+				g.fillRect(0, 600,199, 100 ); //left side left section
+			}
+				
+			if(ball.sect2&&sect2) {
+				g.fillRect(200, 600,399, 100 ); //left side middle section
+			}
+				
+			if(ball.sect3&&sect3) {
+				g.fillRect(400, 600,599, 100 ); //left side right section
+			}
+				
+			if(ball.sect4&&sect4) {
+				g.fillRect(600, 600,799, 100 ); //right side left section
+			}
+				
+			if(ball.sect5&&sect5) {
+				g.fillRect(800, 600,999, 100 ); //right side middle section
+			}
+				
+			if(ball.sect6&&sect6) {
+				g.fillRect(1000, 600,1200, 100 ); //right side right section
+			}
+				
+			g.setColor(light_green);
+			//middle divider on ground
+			g.drawLine(599, 600, 599, 700);
+			g.drawLine(600, 600, 600, 700);
 
+			g.setColor(white);
+			//left side section dividers
+			g.drawLine(199, 600, 199, 700);
+			g.drawLine(200, 600, 200, 700);
+			g.drawLine(399, 600, 399, 700);
+			g.drawLine(400, 600, 400, 700);
 
-
+			//right side section dividers
+			g.drawLine(799, 600, 799, 700);
+			g.drawLine(800, 600, 800, 700);
+			g.drawLine(999, 600, 999, 700);
+			g.drawLine(1000, 600, 1000, 700);
 			//displays the scores
 			g.setColor(Color.WHITE);
 			g.setFont(new Font("Helvetica",Font.BOLD,40));
