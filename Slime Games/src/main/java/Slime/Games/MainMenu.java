@@ -1,4 +1,3 @@
-
 package Slime.Games;
 
 
@@ -125,7 +124,9 @@ public class MainMenu implements ActionListener {
 		switch(action) {
 
 		case "Play Soccer":
-		      javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			//SlimeSoccer s = new SlimeSoccer();
+			
+			  javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			         public void run() {
 			            JFrame frame = new JFrame("Slime Soccer");
 			            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -135,11 +136,21 @@ public class MainMenu implements ActionListener {
 			            frame.setVisible(true);  
 			            }
 			      });
-
+			
 			break;
 
 		case "Play Basketball":
-			SlimeBasketball b = new SlimeBasketball();
+			//SlimeBasketball b = new SlimeBasketball();
+			 javax.swing.SwingUtilities.invokeLater(new Runnable() {
+		         public void run() {
+		            JFrame frame = new JFrame("Slime Basketball");
+		            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		            frame.setContentPane(new SlimeBasketball(1200, 700)); 
+		            frame.pack();            // Preferred size of BallWorld
+		            frame.setResizable(false);
+		            frame.setVisible(true);  
+		            }
+		      });
 			break;
 
 		case "Play Volleyball":
@@ -148,7 +159,7 @@ public class MainMenu implements ActionListener {
 
 		case "Play Spleef":
 			SlimeSpleef p = new SlimeSpleef();
-
+			
 		default:
 			break;
 		}
@@ -160,7 +171,7 @@ public class MainMenu implements ActionListener {
 		@Override
 		protected void paintComponent(Graphics g){
 
-			//socccer ball
+			//soccer ball
 			g.setColor(Color.WHITE);
 			g.fillOval(1200, 200, 65, 65);
 
