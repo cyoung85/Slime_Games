@@ -36,7 +36,9 @@ Once you have all the files you will want to run the game from the SlimeGames.ja
 
 7.The Slime Games folder should be in the package explorer if not go to File->Open Projects from File System...->Directory  and find the Slime Games folder and select it
 
-8.Open the Slime Games folder in package explorer and run the SlimeGames.java file
+8.If you see the red underlines being marked out, change your java enviroment to JRE-1.7 and add Junit5 for testing
+
+9.Open the Slime Games folder in package explorer and run the SlimeGames.java file
 
 # Controls
 ### Player 1 Movement 
