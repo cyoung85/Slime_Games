@@ -16,8 +16,8 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 
 public class SlimeBall extends JComponent {
-	private static float x, y;
-	private static float xSpeed, ySpeed;
+	public static float x, y;
+	public static float xSpeed, ySpeed;
 	private static float radius;
 	private static float gravity;
 	private String game;

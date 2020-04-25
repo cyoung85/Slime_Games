@@ -24,7 +24,7 @@ public class SlimeBasketball extends JPanel {
 	private boolean p2Left = false;
 	private boolean p2Right = false;
 	private boolean p2Jump = false;
-	
+
 	private DrawCanvas canvas; // Custom canvas for drawing the box/SlimeBall
 	private int canvasWidth;
 	private int canvasHeight;
@@ -34,7 +34,7 @@ public class SlimeBasketball extends JPanel {
 	public final int ballyStart = 200;
 	public int ballx = ballxStart;
 	public int bally = ballyStart;
-	
+
 	// start for player 1
 	public final int p1XStart = 150;
 	public final int p1YStart = 550;
@@ -47,7 +47,12 @@ public class SlimeBasketball extends JPanel {
 	public InputMap im;
 	@SuppressWarnings("exports")
 	public ActionMap ap;
-	
+
+	private double defaultRoundTime = 30; //default time for each game
+	private double roundTime = defaultRoundTime; //current remaining time
+	private static Timer timer;
+	public static final int TIMER_SPEED = 12;
+
 	//Frame Declarations
 	public SlimeBasketball(int width, int height){
 		canvasWidth = width;
@@ -93,91 +98,91 @@ public class SlimeBasketball extends JPanel {
 
 		// make player 1 move the desired direction
 		//p1 left
-				ap.put("A Down", new AbstractAction() {
-					private static final long serialVersionUID = 1L;
-					public void actionPerformed(ActionEvent e) {
-						p1Left = true;
-					}
-				});
+		ap.put("A Down", new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent e) {
+				p1Left = true;
+			}
+		});
 
-				ap.put("A Released", new AbstractAction() {
-					private static final long serialVersionUID = 1L;
-					public void actionPerformed(ActionEvent e) {
-						p1Left = false;
-					}
-				});
+		ap.put("A Released", new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent e) {
+				p1Left = false;
+			}
+		});
 
-				//p1 right
-				ap.put("D Down", new AbstractAction() {
-					private static final long serialVersionUID = 1L;
-					public void actionPerformed(ActionEvent e) {
-						p1Right = true;
-					}
-				});
-				ap.put("D Released", new AbstractAction() {
-					private static final long serialVersionUID = 1L;
-					public void actionPerformed(ActionEvent e) {
-						p1Right = false;
-					}
-				});
-				// p1 jump
-				ap.put("W Down", new AbstractAction() {
-					private static final long serialVersionUID = 1L;
+		//p1 right
+		ap.put("D Down", new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent e) {
+				p1Right = true;
+			}
+		});
+		ap.put("D Released", new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent e) {
+				p1Right = false;
+			}
+		});
+		// p1 jump
+		ap.put("W Down", new AbstractAction() {
+			private static final long serialVersionUID = 1L;
 
-					public void actionPerformed(ActionEvent e) {
-						p1Jump = true;
-					}
-				});
-				ap.put("W Released", new AbstractAction() {
-					private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent e) {
+				p1Jump = true;
+			}
+		});
+		ap.put("W Released", new AbstractAction() {
+			private static final long serialVersionUID = 1L;
 
-					public void actionPerformed(ActionEvent e) {
-						p1Jump = false;
-					}
-				});
-				//p2 left
-				ap.put("Left Down", new AbstractAction() {
-					private static final long serialVersionUID = 1L;
-					public void actionPerformed(ActionEvent e) {
-						p2Left = true;
-					}
-				});
-				ap.put("Left Released", new AbstractAction() {
-					private static final long serialVersionUID = 1L;
-					public void actionPerformed(ActionEvent e) {
-						p2Left = false;
-					}
-				});
+			public void actionPerformed(ActionEvent e) {
+				p1Jump = false;
+			}
+		});
+		//p2 left
+		ap.put("Left Down", new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent e) {
+				p2Left = true;
+			}
+		});
+		ap.put("Left Released", new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent e) {
+				p2Left = false;
+			}
+		});
 
-				//p2 right
-				ap.put("Right Down", new AbstractAction() {
-					private static final long serialVersionUID = 1L;
-					public void actionPerformed(ActionEvent e) {
-						p2Right = true;
-					}
-				});
-				ap.put("Right Released", new AbstractAction() {
-					private static final long serialVersionUID = 1L;
-					public void actionPerformed(ActionEvent e) {
-						p2Right = false;
-					}
-				});
-				// p2 jump
-				ap.put("Up Down", new AbstractAction() {
-					private static final long serialVersionUID = 1L;
+		//p2 right
+		ap.put("Right Down", new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent e) {
+				p2Right = true;
+			}
+		});
+		ap.put("Right Released", new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent e) {
+				p2Right = false;
+			}
+		});
+		// p2 jump
+		ap.put("Up Down", new AbstractAction() {
+			private static final long serialVersionUID = 1L;
 
-					public void actionPerformed(ActionEvent e) {
-						p2Jump = true;
-					}
-				});
-				ap.put("Up Released", new AbstractAction() {
-					private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent e) {
+				p2Jump = true;
+			}
+		});
+		ap.put("Up Released", new AbstractAction() {
+			private static final long serialVersionUID = 1L;
 
-					public void actionPerformed(ActionEvent e) {
-						p2Jump = false;
-					}
-				});
-				
+			public void actionPerformed(ActionEvent e) {
+				p2Jump = false;
+			}
+		});
+
 		// Handling window resize.
 		this.addComponentListener(new ComponentAdapter() {
 			@Override
@@ -193,7 +198,7 @@ public class SlimeBasketball extends JPanel {
 
 		// Start the SlimeBall bouncing
 		gameStart();
-    } 
+	} 
 	/** Start the SlimeBall bouncing. */
 	public void gameStart() {
 		// Run the game logic in its own thread.
@@ -205,7 +210,7 @@ public class SlimeBasketball extends JPanel {
 					// Refresh the display
 					repaint();
 					// Delay and give other thread a chance
-					
+
 					try {
 						Thread.sleep(1000 / UPDATE_RATE);
 					} catch (InterruptedException ex) {
@@ -250,7 +255,52 @@ public class SlimeBasketball extends JPanel {
 			p1.touchedGround();
 		if (p2.getY() == 550)
 			p2.touchedGround();
+
+		//timer running and game restart
+		if ( roundTime > 0 ) {
+
+			roundTime -= TIMER_SPEED * .001;
+			repaint();
+		} else {
+			//timer.stop();
+			int winner = 0;
+			if (SlimeGames.p1score > SlimeGames.p2score) {
+				winner = 1;
+			} else if (SlimeGames.p2score > SlimeGames.p1score){
+				winner = 2;
+			}
+			String notification;
+			if (winner == 0) {
+				notification = "Tie! Play again?";
+			} else {
+				notification = "Player " + winner + " won. Play again?";
+			}
+			int input = JOptionPane.showOptionDialog( new JFrame(), notification, "Game Over", JOptionPane.YES_NO_OPTION,
+					JOptionPane.PLAIN_MESSAGE, null, null, null);
+			if (input == JOptionPane.YES_OPTION){//resetting the timer, players, and ball when played again
+				roundTime = defaultRoundTime;
+				SlimeGames.p1score = 0;
+				SlimeGames.p2score = 0;
+				ball.x = window.getMaxX()/2 -20;
+				ball.y = 100;
+				p1.setX(150);
+				p1.setY(550);
+				p2.setX(950);
+				p2.setY(550);
+				ball.xSpeed = 0;
+				ball.ySpeed = 0;
+				p1Left = false;
+				p1Right = false;
+				p1Jump = false;
+				p2Left = false;
+				p2Right = false;
+				p2Jump = false;
+			} else { //closes the program when not playing again
+				System.exit(0);
+			}
+		}
 	}
+
 
 	// makes sure the window loads in properly
 
@@ -264,7 +314,7 @@ public class SlimeBasketball extends JPanel {
 		/** Custom drawing codes */
 		@Override
 		public void paintComponent(Graphics g) {
-			
+
 			// Draw the box and the SlimeBall
 			window.draw(g);
 			ball.draw(g);
@@ -272,54 +322,59 @@ public class SlimeBasketball extends JPanel {
 			p2.draw(g);
 			Color black = new Color(0,0,0);
 			Color light_grey = new Color(204,204,204);
-	        g.setColor(light_grey);
-	        //Nets
-	        //left
-	        g.drawLine(30,408,95,408);
-	        g.drawLine(35,416,90,416);
-	        g.drawLine(39,424,86,424);
-	        g.drawLine(43,432,82,432);
-	        g.drawLine(46,440,79,440);
-	        g.drawLine(46,400,46,440);
-	        g.drawLine(79,400,79,440);
-	        g.drawLine(63,400,63,440);
-	        g.drawLine(25,400,46,440);
-	        g.drawLine(100,400,79,440);
-	        //right
-	        g.drawLine(1170,408,1105,408);
-	        g.drawLine(1165,416,1110,416);
-	        g.drawLine(1161,424,1114,424);
-	        g.drawLine(1157,432,1118,432);
-	        g.drawLine(1154,440,1121,440);
-	        g.drawLine(1121,400,1121,440);
-	        g.drawLine(1154,400,1154,440);
-	        g.drawLine(1137,400,1137,440);
-	        g.drawLine(1175,400,1154,440);
-	        g.drawLine(1100,400,1121,440);
-			
-	        g.setColor(black);
-	        //left rim
-	        g.drawLine(25,400,100,400);
-	        g.drawLine(25,399,100,399);
-	        g.drawLine(25,401,100,401);
-	        g.drawLine(25,350,25,600);
-	        g.drawLine(24,350,24,600);
-	        g.drawLine(26,350,26,600);
-	        //right rim
-	        g.drawLine(1175,400,1100,400);
-	        g.drawLine(1175,399,1100,399);
-	        g.drawLine(1175,401,1100,401);
-	        g.drawLine(1175,350,1175,600);
-	        g.drawLine(1174,350,1174,600);
-	        g.drawLine(1176,350,1176,600);
+			g.setColor(light_grey);
+			//Nets
+			//left
+			g.drawLine(30,408,95,408);
+			g.drawLine(35,416,90,416);
+			g.drawLine(39,424,86,424);
+			g.drawLine(43,432,82,432);
+			g.drawLine(46,440,79,440);
+			g.drawLine(46,400,46,440);
+			g.drawLine(79,400,79,440);
+			g.drawLine(63,400,63,440);
+			g.drawLine(25,400,46,440);
+			g.drawLine(100,400,79,440);
+			//right
+			g.drawLine(1170,408,1105,408);
+			g.drawLine(1165,416,1110,416);
+			g.drawLine(1161,424,1114,424);
+			g.drawLine(1157,432,1118,432);
+			g.drawLine(1154,440,1121,440);
+			g.drawLine(1121,400,1121,440);
+			g.drawLine(1154,400,1154,440);
+			g.drawLine(1137,400,1137,440);
+			g.drawLine(1175,400,1154,440);
+			g.drawLine(1100,400,1121,440);
+
+			g.setColor(black);
+			//left rim
+			g.drawLine(25,400,100,400);
+			g.drawLine(25,399,100,399);
+			g.drawLine(25,401,100,401);
+			g.drawLine(25,350,25,600);
+			g.drawLine(24,350,24,600);
+			g.drawLine(26,350,26,600);
+			//right rim
+			g.drawLine(1175,400,1100,400);
+			g.drawLine(1175,399,1100,399);
+			g.drawLine(1175,401,1100,401);
+			g.drawLine(1175,350,1175,600);
+			g.drawLine(1174,350,1174,600);
+			g.drawLine(1176,350,1176,600);
 			// displays scores
 			g.setColor(Color.BLACK);
 			g.setFont(new Font("Helvetica", Font.BOLD, 40));
 			g.drawString("" + SlimeGames.p1score, 50, 100);
 			g.drawString("" + SlimeGames.p2score, 1200 - 80, 100);
+			
+			//display timer
+			g.setColor(Color.YELLOW);
+			g.setFont(new Font("Helvetica",Font.BOLD,40));
+			g.drawString("" + Math.round(roundTime), 1200/2 - 20, 80);
 
 		}
 
 	}
-   
+
 }

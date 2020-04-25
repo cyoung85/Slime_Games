@@ -47,6 +47,11 @@ public class SlimeVolleyball extends JPanel{
 	@SuppressWarnings("exports")
 	public ActionMap ap;
 
+	private double defaultRoundTime = 30; //default time for each game
+	private double roundTime = defaultRoundTime; //current remaining time
+	private static Timer timer;
+	public static final int TIMER_SPEED = 12;
+
 
 	//Frame Declarations
 	public SlimeVolleyball(int width, int height){
@@ -121,20 +126,20 @@ public class SlimeVolleyball extends JPanel{
 			}
 		});
 		// p1 jump
-				ap.put("W Down", new AbstractAction() {
-					private static final long serialVersionUID = 1L;
+		ap.put("W Down", new AbstractAction() {
+			private static final long serialVersionUID = 1L;
 
-					public void actionPerformed(ActionEvent e) {
-						p1Jump = true;
-					}
-				});
-				ap.put("W Released", new AbstractAction() {
-					private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent e) {
+				p1Jump = true;
+			}
+		});
+		ap.put("W Released", new AbstractAction() {
+			private static final long serialVersionUID = 1L;
 
-					public void actionPerformed(ActionEvent e) {
-						p1Jump = false;
-					}
-				});
+			public void actionPerformed(ActionEvent e) {
+				p1Jump = false;
+			}
+		});
 		//p2 left
 		ap.put("Left Down", new AbstractAction() {
 			private static final long serialVersionUID = 1L;
@@ -163,20 +168,20 @@ public class SlimeVolleyball extends JPanel{
 			}
 		});
 		// p2 jump
-				ap.put("Up Down", new AbstractAction() {
-					private static final long serialVersionUID = 1L;
+		ap.put("Up Down", new AbstractAction() {
+			private static final long serialVersionUID = 1L;
 
-					public void actionPerformed(ActionEvent e) {
-						p2Jump = true;
-					}
-				});
-				ap.put("Up Released", new AbstractAction() {
-					private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent e) {
+				p2Jump = true;
+			}
+		});
+		ap.put("Up Released", new AbstractAction() {
+			private static final long serialVersionUID = 1L;
 
-					public void actionPerformed(ActionEvent e) {
-						p2Jump = false;
-					}
-				});
+			public void actionPerformed(ActionEvent e) {
+				p2Jump = false;
+			}
+		});
 		// Handling window resize.
 		this.addComponentListener(new ComponentAdapter() {
 			@Override
@@ -248,6 +253,50 @@ public class SlimeVolleyball extends JPanel{
 			p1.touchedGround();
 		if (p2.getY() == 550)
 			p2.touchedGround();
+
+		//timer running and game restart
+		if ( roundTime > 0 ) {
+
+			roundTime -= TIMER_SPEED * .001;
+			repaint();
+		} else {
+			//timer.stop();
+			int winner = 0;
+			if (SlimeGames.p1score > SlimeGames.p2score) {
+				winner = 1;
+			} else if (SlimeGames.p2score > SlimeGames.p1score){
+				winner = 2;
+			}
+			String notification;
+			if (winner == 0) {
+				notification = "Tie! Play again?";
+			} else {
+				notification = "Player " + winner + " won. Play again?";
+			}
+			int input = JOptionPane.showOptionDialog( new JFrame(), notification, "Game Over", JOptionPane.YES_NO_OPTION,
+					JOptionPane.PLAIN_MESSAGE, null, null, null);
+			if (input == JOptionPane.YES_OPTION){//resetting the timer, players, and ball when played again
+				roundTime = defaultRoundTime;
+				SlimeGames.p1score = 0;
+				SlimeGames.p2score = 0;
+				ball.x = 190;
+				ball.y = 100;
+				p1.setX(150);
+				p1.setY(550);
+				p2.setX(950);
+				p2.setY(550);
+				ball.xSpeed = 0;
+				ball.ySpeed = 0;
+				p1Left = false;
+				p1Right = false;
+				p1Jump = false;
+				p2Left = false;
+				p2Right = false;
+				p2Jump = false;
+			} else { //closes the program when not playing again
+				System.exit(0);
+			}
+		}
 	}
 
 	// makes sure the window loads in properly
@@ -269,14 +318,16 @@ public class SlimeVolleyball extends JPanel{
 			p1.draw(g);
 			p2.draw(g);
 
-
-
-
 			//displays the scores
 			g.setColor(Color.WHITE);
 			g.setFont(new Font("Helvetica",Font.BOLD,40));
 			g.drawString("" + SlimeGames.p1score, 50, 100);
 			g.drawString("" + SlimeGames.p2score, 1200 - 80, 100);
+			
+			//display timer
+			g.setColor(Color.YELLOW);
+			g.setFont(new Font("Helvetica",Font.BOLD,40));
+			g.drawString("" + Math.round(roundTime), 1200/2 - 20, 80);
 
 
 		}   

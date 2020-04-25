@@ -10,7 +10,7 @@ public class WindowBounds {
 	private int maxX;
 	private int maxY;
 	private String game;
-	private boolean initialSpleefSetup = true;
+	public boolean initialSpleefSetup = true;
 	public WindowBounds(int width, int height,String gameType) {
 		setMinX(0);
 		setMinY(0);
@@ -140,18 +140,13 @@ public class WindowBounds {
 				g.setColor(light_blue);
 				g.fillRect(0, 0,1200, 700 );
 				g.setColor(dark_green); // default set to normal grass color
-				g.fillRect(0, 600,199, 100 ); //left side left section
-				//g.setColor(dark_red); 
+				g.fillRect(0, 600,199, 100 ); //left side left section 
 				g.fillRect(200, 600,399, 100 ); //left side middle section
-				//g.setColor(dark_green);
 				g.fillRect(400, 600,599, 100 ); //left side right section
 
-				//right 3 sections for spleef
-				//g.setColor(dark_red); 
+				//right 3 sections for spleef 
 				g.fillRect(600, 600,799, 100 ); //right side left section
-				//g.setColor(dark_green);
 				g.fillRect(800, 600,999, 100 ); //right side middle section
-				//g.setColor(dark_red); 
 				g.fillRect(1000, 600,1200, 100 ); //right side right section
 				initialSpleefSetup = false;
 			}
