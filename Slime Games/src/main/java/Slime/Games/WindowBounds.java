@@ -112,9 +112,11 @@ public class WindowBounds {
 			g.drawLine(940,101,1063,101);
 		}
 		else if (game == "volleyball") {
+			//sky
 			Color light_blue = new Color(51,153,255);
 			g.setColor(light_blue);
 			g.fillRect(0, 0,1200, 700 );
+			//ground
 			Color sand = new Color(244,204,99);
 			g.setColor(sand);
 			g.fillRect(0, 600,1200, 100 );

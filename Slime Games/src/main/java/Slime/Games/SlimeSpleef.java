@@ -17,8 +17,9 @@ public class SlimeSpleef extends JPanel{
 	private SlimeBall ball; // A single bouncing SlimeBall instance
 	private WindowBounds window; // The container rectangular box
 	private Player_1 p1; // Player 1's variable
-	private Player_2 p2;
+	private Player_2 p2; //Player 2's variable
 
+	//boolean variables for movement
 	private boolean p1Left = false;
 	private boolean p1Right = false;
 	private boolean p1Jump = false;
@@ -143,6 +144,8 @@ public class SlimeSpleef extends JPanel{
 				p1Jump = false;
 			}
 		});
+		
+		// make player 2 move the desired direction
 		//p2 left
 		ap.put("Left Down", new AbstractAction() {
 			private static final long serialVersionUID = 1L;
@@ -227,7 +230,8 @@ public class SlimeSpleef extends JPanel{
 	 * and response.
 	 */
 	public void gameUpdate() {
-		ball.moveWithColision(window, p1,p2);
+		ball.moveWithColision(window, p1,p2); //ball collisions
+		//updates the player based on the movement that is true and checks if they are able to jump
 		if(p1Left)
 			p1.moveLeft();
 		if(p1Right)
@@ -264,7 +268,7 @@ public class SlimeSpleef extends JPanel{
 			roundTime -= TIMER_SPEED * .001;
 			repaint();
 		} else {
-			//timer.stop();
+			//checks for the winner and displays it in the panel at the end
 			int winner = 0;
 			if (SlimeGames.p1score > SlimeGames.p2score) {
 				winner = 1;
@@ -285,12 +289,12 @@ public class SlimeSpleef extends JPanel{
 				SlimeGames.p2score = 0;
 				ball.x = 190;
 				ball.y = 100;
-				p1.setX(150);
-				p1.setY(550);
-				p2.setX(950);
-				p2.setY(550);
+				p1.setX(p1XStart);
+				p1.setY(p1YStart);
+				p2.setX(p2XStart);
+				p2.setY(p2YStart);
 				ball.xSpeed = 0;
-				ball.ySpeed = 0;
+				ball.ySpeed = -5;
 				ball.sect1=false;
 				ball.sect2=false;
 				ball.sect3=false;

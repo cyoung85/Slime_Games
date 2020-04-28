@@ -20,7 +20,7 @@ public class Player_2 extends JComponent{
 	public int dy = 10;
 	private boolean touchedground = true;
 	
-	//public InputMap am;
+
 	
 	public Player_2(int x, int y) {
 	Player_2.x = x;

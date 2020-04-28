@@ -16,8 +16,9 @@ public class SlimeSoccer extends JPanel {
 	private SlimeBall ball; // A single bouncing SlimeBall instance
 	private WindowBounds window; // The container rectangular box
 	private Player_1 p1; // Player 1's variable
-	private Player_2 p2;
+	private Player_2 p2; //Player 2's variable
 
+	//boolean variables for movement
 	private boolean p1Left = false;
 	private boolean p1Right = false;
 	private boolean p1Jump = false;
@@ -28,7 +29,7 @@ public class SlimeSoccer extends JPanel {
 	private DrawCanvas canvas; // Custom canvas for drawing the box/SlimeBall
 	private int canvasWidth;
 	private int canvasHeight;
-	//private String game = "soccer";
+
 	// the starting location for the ball
 	public final int ballxStart = 580;
 	public final int ballyStart = 200;
@@ -142,6 +143,7 @@ public class SlimeSoccer extends JPanel {
 			}
 		});
 
+		// make player 2 move the desired direction
 		//p2 left
 		ap.put("Left Down", new AbstractAction() {
 			private static final long serialVersionUID = 1L;
@@ -230,7 +232,8 @@ public class SlimeSoccer extends JPanel {
 	 * and response.
 	 */
 	public void gameUpdate() {
-		ball.moveWithColision(window, p1,p2);
+		ball.moveWithColision(window, p1,p2); //ball collisions
+		//updates the player based on the movement that is true and checks if they are able to jump
 		if(p1Left)
 			p1.moveLeft();
 		if(p1Right)
@@ -267,9 +270,9 @@ public class SlimeSoccer extends JPanel {
 			roundTime -= TIMER_SPEED * .001;
 			repaint();
 		} else {
-			//timer.stop();
+			//checks for the winner and displays it in the panel at the end
 			int winner = 0;
-			if (SlimeGames.p1score > SlimeGames.p2score) {
+			if (SlimeGames.p1score > SlimeGames.p2score) { 
 				winner = 1;
 			} else if (SlimeGames.p2score > SlimeGames.p1score){
 				winner = 2;
@@ -282,16 +285,16 @@ public class SlimeSoccer extends JPanel {
 			}
 			int input = JOptionPane.showOptionDialog( new JFrame(), notification, "Game Over", JOptionPane.YES_NO_OPTION,
 					JOptionPane.PLAIN_MESSAGE, null, null, null);
-			if (input == JOptionPane.YES_OPTION){//resetting the timer, players, and ball when played again
+			if (input == JOptionPane.YES_OPTION){   //resetting the timer, players, and ball when played again
 				roundTime = defaultRoundTime;
 				SlimeGames.p1score = 0;
 				SlimeGames.p2score = 0;
-				ball.x = window.getMaxX()/2 -20;
-				ball.y = 100;
-				p1.setX(150);
-				p1.setY(550);
-				p2.setX(950);
-				p2.setY(550);
+				ball.x = ballxStart;
+				ball.y = ballyStart;
+				p1.setX(p1XStart);
+				p1.setY(p1YStart);
+				p2.setX(p2XStart);
+				p2.setY(p2YStart);
 				ball.xSpeed = 0;
 				ball.ySpeed = 0;
 				p1Left = false;

@@ -125,8 +125,6 @@ public class MainMenu implements ActionListener {
 		switch(action) {
 
 		case "Play Soccer":
-			//SlimeSoccer s = new SlimeSoccer();
-			
 			  javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			         public void run() {
 			            JFrame frame = new JFrame("Slime Soccer");
@@ -141,7 +139,6 @@ public class MainMenu implements ActionListener {
 			break;
 
 		case "Play Basketball":
-			//SlimeBasketball b = new SlimeBasketball();
 			 javax.swing.SwingUtilities.invokeLater(new Runnable() {
 		         public void run() {
 		            JFrame frame = new JFrame("Slime Basketball");
@@ -155,7 +152,6 @@ public class MainMenu implements ActionListener {
 			break;
 
 		case "Play Volleyball":
-			//SlimeVolleyball v = new SlimeVolleyball();
 			javax.swing.SwingUtilities.invokeLater(new Runnable() {
 		         public void run() {
 		            JFrame frame = new JFrame("Slime Volleyball");
@@ -170,7 +166,6 @@ public class MainMenu implements ActionListener {
 			break;
 
 		case "Play Spleef":
-			//SlimeSpleef p = new SlimeSpleef();
 			javax.swing.SwingUtilities.invokeLater(new Runnable() {
 		         public void run() {
 		            JFrame frame = new JFrame("Slime Spleef");
