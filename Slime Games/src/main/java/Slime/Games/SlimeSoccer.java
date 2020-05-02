@@ -223,7 +223,7 @@ public class SlimeSoccer extends JPanel {
 				}
 			}
 		};
-		gameThread.start(); // Invoke GaemThread.run()
+		gameThread.start(); 
 
 	}
 

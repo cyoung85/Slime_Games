@@ -223,7 +223,7 @@ public class SlimeSpleef extends JPanel{
 				}
 			}
 		};
-		gameThread.start(); // Invoke GaemThread.run()
+		gameThread.start(); 
 	}
 	/**
 	 * One game time-step. Update the game objects, with proper collision detection
